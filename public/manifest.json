@@ -1,0 +1,22 @@
+{
+  "name": "Weight Forecast - AI Weight Prediction",
+  "short_name": "Weight Forecast",
+  "description": "Forecast your weight loss with AI. Track daily weights and predict when you'll reach your goals.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#F59E0B",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
+
