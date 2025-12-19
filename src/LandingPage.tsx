@@ -23,7 +23,7 @@ import {
   Globe
 } from 'lucide-react';
 
-const APP_URL = 'https://burn-work-go.vercel.app';
+const APP_URL = 'https://weight-forecast.com';
 
 // Animated counter hook
 const useCounter = (end: number, duration: number = 2000) => {
