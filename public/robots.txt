@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://weight-forecast.com/sitemap.xml
+Sitemap: https://www.weight-forecast.com/sitemap.xml
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
