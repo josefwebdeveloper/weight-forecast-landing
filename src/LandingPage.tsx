@@ -23,6 +23,14 @@ import {
   Globe
 } from 'lucide-react';
 
+// TypeScript declaration for gtag
+declare global {
+  interface Window {
+    gtag?: (command: string, ...args: any[]) => void;
+    dataLayer?: any[];
+  }
+}
+
 const APP_URL = 'https://weight-forecast.com';
 
 // Google Analytics helper
