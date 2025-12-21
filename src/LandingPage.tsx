@@ -25,6 +25,13 @@ import {
 
 const APP_URL = 'https://weight-forecast.com';
 
+// Google Analytics helper
+const trackEvent = (eventName: string, params?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', eventName, params);
+  }
+};
+
 // Animated counter hook
 const useCounter = (end: number, duration: number = 2000) => {
   const [count, setCount] = useState(0);
@@ -47,6 +54,33 @@ const LandingPage: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const userCount = useCounter(10847, 2500);
   const predictionsCount = useCounter(284691, 3000);
+  
+  // Track scroll depth
+  useEffect(() => {
+    const trackScroll = () => {
+      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      
+      if (scrollPercent > 25 && !sessionStorage.getItem('scroll_25')) {
+        trackEvent('scroll_depth', { depth: 25 });
+        sessionStorage.setItem('scroll_25', 'true');
+      }
+      if (scrollPercent > 50 && !sessionStorage.getItem('scroll_50')) {
+        trackEvent('scroll_depth', { depth: 50 });
+        sessionStorage.setItem('scroll_50', 'true');
+      }
+      if (scrollPercent > 75 && !sessionStorage.getItem('scroll_75')) {
+        trackEvent('scroll_depth', { depth: 75 });
+        sessionStorage.setItem('scroll_75', 'true');
+      }
+      if (scrollPercent > 90 && !sessionStorage.getItem('scroll_100')) {
+        trackEvent('scroll_depth', { depth: 100 });
+        sessionStorage.setItem('scroll_100', 'true');
+      }
+    };
+    
+    window.addEventListener('scroll', trackScroll);
+    return () => window.removeEventListener('scroll', trackScroll);
+  }, []);
   
   const features = [
     {
@@ -187,6 +221,7 @@ const LandingPage: React.FC = () => {
             </a>
             <a
               href={APP_URL}
+              onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Launch App' })}
               className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/25 text-slate-950 text-sm"
             >
               Launch App →
@@ -225,6 +260,7 @@ const LandingPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <a
                 href={APP_URL}
+                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Get My Goal Date' })}
                 className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 flex items-center justify-center gap-2"
               >
                 🎯 Get My Goal Date (FREE)
@@ -232,6 +268,7 @@ const LandingPage: React.FC = () => {
               </a>
               <a
                 href="#how-it-works"
+                onClick={() => trackEvent('navigation_click', { destination: 'how_it_works' })}
                 className="px-8 py-4 glass border border-slate-700 hover:border-slate-600 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 hover:bg-slate-800/50"
               >
                 See How It Works
@@ -477,7 +514,10 @@ const LandingPage: React.FC = () => {
                 className="glass border border-slate-700/50 rounded-xl overflow-hidden hover:border-slate-600 transition-colors"
               >
                 <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  onClick={() => {
+                    setOpenFaq(openFaq === i ? null : i);
+                    trackEvent('faq_interaction', { question: faq.q, action: openFaq === i ? 'close' : 'open' });
+                  }}
                   className="w-full flex items-center justify-between p-5 text-left"
                 >
                   <span className="font-semibold pr-4">{faq.q}</span>
@@ -520,6 +560,7 @@ const LandingPage: React.FC = () => {
               </p>
               <a
                 href={APP_URL}
+                onClick={() => trackEvent('cta_click', { location: 'final_cta', cta_text: 'Show Me My Goal Date' })}
                 className="group px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-xl text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 inline-flex items-center justify-center gap-2"
               >
                 🎯 Show Me My Goal Date (FREE)
