@@ -601,8 +601,9 @@ const LandingPage: React.FC = () => {
             <div className="flex gap-6 text-sm text-slate-400">
               <a href="#features" className="hover:text-white transition-colors">Features</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
+              <a href="/terms" className="hover:text-white transition-colors">Terms</a>
+              <a href="mailto:working.projects.info@gmail.com" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
           
