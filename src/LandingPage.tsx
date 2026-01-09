@@ -20,7 +20,8 @@ import {
   Sparkles,
   Award,
   Heart,
-  Globe
+  Globe,
+  BookOpen
 } from 'lucide-react';
 
 // TypeScript declaration for gtag
@@ -138,6 +139,14 @@ const LandingPage: React.FC = () => {
       color: 'text-pink-400',
       bg: 'bg-pink-500/10',
       border: 'border-pink-500/20'
+    },
+    {
+      icon: BookOpen,
+      title: '📔 Daily Diary & Day Rating',
+      description: 'Write daily entries and rate your day (1-5 stars). Color-coded cards show your progress at a glance. Track thoughts, feelings, and achievements.',
+      color: 'text-indigo-400',
+      bg: 'bg-indigo-500/10',
+      border: 'border-indigo-500/20'
     }
   ];
 
@@ -196,6 +205,7 @@ const LandingPage: React.FC = () => {
     { feature: 'Goal Date Forecast', us: true, others: false },
     { feature: '3x Daily Tracking', us: true, others: false },
     { feature: 'AI Food Scanner', us: true, others: '💰' },
+    { feature: 'Daily Diary & Rating', us: true, others: false },
     { feature: 'Beautiful Charts', us: true, others: true },
     { feature: 'Works Offline', us: true, others: '💰' },
     { feature: 'Free Forever', us: true, others: false },

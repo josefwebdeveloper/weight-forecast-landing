@@ -61,6 +61,8 @@ const Terms: React.FC = () => {
               <li>AI-powered weight goal date predictions using linear regression</li>
               <li>Weight and health metrics tracking (3x daily measurements)</li>
               <li>AI food calorie estimation from photos and text</li>
+              <li>Daily diary entries with day rating system (1-5 stars)</li>
+              <li>Color-coded progress cards based on day ratings</li>
               <li>BMI calculations and progress visualization</li>
               <li>Offline functionality via Progressive Web App (PWA)</li>
               <li>Cloud synchronization across devices</li>
