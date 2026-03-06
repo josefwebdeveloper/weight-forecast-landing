@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Scale,
-  TrendingDown,
   Brain,
-  BarChart3,
   Smartphone,
   Shield,
   CheckCircle2,
@@ -13,15 +10,16 @@ import {
   Calendar,
   Activity,
   Banana,
-  Star,
-  Users,
   Clock,
   ChevronDown,
   Sparkles,
   Award,
   Heart,
   Globe,
-  BookOpen
+  BookOpen,
+  Mic,
+  MessageCircle,
+  Video
 } from 'lucide-react';
 
 // TypeScript declaration for gtag
@@ -41,28 +39,10 @@ const trackEvent = (eventName: string, params?: Record<string, any>) => {
   }
 };
 
-// Animated counter hook
-const useCounter = (end: number, duration: number = 2000) => {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    let startTime: number;
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(Math.floor(progress * end));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [end, duration]);
-
-  return count;
-};
+// Removed useCounter as we're not using fake metrics anymore
 
 const LandingPage: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const userCount = useCounter(10847, 2500);
-  const predictionsCount = useCounter(284691, 3000);
 
   // Track scroll depth
   useEffect(() => {
@@ -101,79 +81,68 @@ const LandingPage: React.FC = () => {
       border: 'border-amber-500/20'
     },
     {
-      icon: Scale,
-      title: '📊 Track 3x Daily (Smart!)',
-      description: 'Morning, afternoon, evening. See your body\'s natural rhythm. Eliminates scale anxiety from daily fluctuations.',
-      color: 'text-emerald-400',
-      bg: 'bg-emerald-500/10',
-      border: 'border-emerald-500/20'
-    },
-    {
-      icon: BarChart3,
-      title: '📈 Spot Patterns Instantly',
-      description: 'Beautiful charts show what\'s working (and what\'s not). Make smarter decisions, lose weight faster.',
-      color: 'text-blue-400',
-      bg: 'bg-blue-500/10',
-      border: 'border-blue-500/20'
+      icon: Mic,
+      title: '🎙️ Voice Meal Logging',
+      description: 'Log meals with just your voice. AI extracts the food items and estimates calories instantly. Supports English & Russian.',
+      color: 'text-red-400',
+      bg: 'bg-red-500/10',
+      border: 'border-red-500/20'
     },
     {
       icon: Sparkles,
       title: '📸 AI Food Scanner',
-      description: 'Take a photo → Get calories instantly. No manual input. No database searching. Pure magic.',
+      description: 'Take a photo of your food  → Get calories instantly. No manual typing or database searching needed.',
       color: 'text-purple-400',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20'
     },
     {
-      icon: Target,
-      title: '🏆 Stay Motivated Daily',
-      description: 'Set goal weight, track BMI. Watch countdown shrink as you get closer. Motivation on autopilot.',
+      icon: MessageCircle,
+      title: '🤖 Telegram AI Coach',
+      description: 'Get daily actionable insight plans and an AI-generated weekly 60s podcast summarizing your progress directly in Telegram.',
+      color: 'text-blue-400',
+      bg: 'bg-blue-500/10',
+      border: 'border-blue-500/20'
+    },
+    {
+      icon: Video,
+      title: '🎬 Time Travel Progress Videos',
+      description: 'Since you are taking progress photos, we auto-generate timelapse videos of your transformation to share.',
       color: 'text-orange-400',
       bg: 'bg-orange-500/10',
       border: 'border-orange-500/20'
     },
     {
-      icon: Smartphone,
-      title: '💪 Works Offline',
-      description: 'Install like a native app. No internet? No problem. Data syncs automatically when you\'re back online.',
-      color: 'text-pink-400',
-      bg: 'bg-pink-500/10',
-      border: 'border-pink-500/20'
+      icon: Activity,
+      title: '📉 Plateau Intervention',
+      description: 'Mathematical plateau detection triggers custom coaching interventions (e.g. re-feed days or sleep focus).',
+      color: 'text-emerald-400',
+      bg: 'bg-emerald-500/10',
+      border: 'border-emerald-500/20'
+    },
+    {
+      icon: Award,
+      title: '🏆 Consistency Badges',
+      description: 'Earn rewards for building the habits, not just the results. E.g. "Logged 7 days in a row", "Hit protein goals".',
+      color: 'text-yellow-400',
+      bg: 'bg-yellow-500/10',
+      border: 'border-yellow-500/20'
     },
     {
       icon: BookOpen,
       title: '📔 Daily Diary & Day Rating',
-      description: 'Write daily entries and rate your day (1-5 stars). Color-coded cards show your progress at a glance. Track thoughts, feelings, and achievements.',
+      description: 'Write daily entries and rate your day (1-5 stars) to visually map how your mood tracks with your progress.',
       color: 'text-indigo-400',
       bg: 'bg-indigo-500/10',
       border: 'border-indigo-500/20'
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: 'Sarah Martinez',
-      role: 'Lost 12kg in 4 months',
-      avatar: '👩‍💼',
-      content: 'The AI predicted March 15th. I hit my goal on March 12th! For the first time, I KNEW I\'d make it. No more "will I ever get there?" doubts. This changed everything.',
-      rating: 5,
-      verified: true
     },
     {
-      name: 'Michael Rodriguez',
-      role: 'Tried 10+ apps before this',
-      avatar: '🧔',
-      content: 'Every other app just tracks. This one PREDICTS. Seeing "Goal Date: June 8th" kept me going when I wanted to quit. Hit it 3 days early. Unreal.',
-      rating: 5,
-      verified: true
-    },
-    {
-      name: 'Emma Kim',
-      role: 'Busy Mom of 3',
-      avatar: '👩',
-      content: 'I used to panic when the scale went up. Now I track 3x daily and see the REAL trend. Down 8kg and actually enjoying the process. Finally!',
-      rating: 5,
-      verified: true
+      icon: Globe,
+      title: '💪 Offline Mastery',
+      description: 'Fully operational offline mode. Log food and weight with zero internet, and sync perfectly when back online.',
+      color: 'text-pink-400',
+      bg: 'bg-pink-500/10',
+      border: 'border-pink-500/20'
     }
   ];
 
@@ -201,14 +170,14 @@ const LandingPage: React.FC = () => {
   ];
 
   const comparisonData = [
-    { feature: 'AI Weight Prediction', us: true, others: false },
-    { feature: 'Goal Date Forecast', us: true, others: false },
-    { feature: '3x Daily Tracking', us: true, others: false },
-    { feature: 'AI Food Scanner', us: true, others: '💰' },
-    { feature: 'Daily Diary & Rating', us: true, others: false },
-    { feature: 'Beautiful Charts', us: true, others: true },
-    { feature: 'Works Offline', us: true, others: '💰' },
-    { feature: 'Free Forever', us: true, others: false },
+    { feature: 'AI Prediction to exact date', us: true, others: false },
+    { feature: 'Voice / Photo Meal Logging', us: true, others: '💰' },
+    { feature: 'Telegram Bot & Weekly Podcasts', us: true, others: false },
+    { feature: 'Time Travel Timelapse Videos', us: true, others: false },
+    { feature: 'Plateau Intervention & Adjustments', us: true, others: false },
+    { feature: 'Daily Diary & 1-5 Star Ratings', us: true, others: false },
+    { feature: 'Full Offline Functionality', us: true, others: '💰' },
+    { feature: 'Completely Free Forever', us: true, others: false },
   ];
 
   return (
@@ -250,17 +219,7 @@ const LandingPage: React.FC = () => {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-20 sm:pt-20 sm:pb-32">
           <div className="text-center max-w-4xl mx-auto">
-            {/* Social Proof Badge */}
-            <div className="inline-flex items-center gap-3 px-5 py-2.5 glass border border-amber-500/20 rounded-full text-sm font-medium mb-8">
-              <div className="flex -space-x-2">
-                <div className="w-6 h-6 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full border-2 border-slate-950" />
-                <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full border-2 border-slate-950" />
-                <div className="w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full border-2 border-slate-950" />
-              </div>
-              <span className="text-amber-300">
-                <span className="font-bold">{userCount.toLocaleString()}+</span> people forecasting their goals
-              </span>
-            </div>
+            {/* Social Proof Badge removed */}
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">
               Know <span className="underline decoration-amber-500 decoration-4">Exactly</span> When
@@ -272,7 +231,6 @@ const LandingPage: React.FC = () => {
             <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
               Stop wondering <span className="text-slate-300 italic">"How long will this take?"</span>
               <span className="block mt-2 text-white font-semibold">Our AI tells you the EXACT DATE.</span>
-              10,847+ people already know their finish line. ⏰
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -293,13 +251,7 @@ const LandingPage: React.FC = () => {
               </a>
             </div>
 
-            {/* Urgency Element */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full text-red-300 text-sm font-medium mb-4">
-              <Zap size={14} className="animate-pulse" />
-              <span>
-                <span className="font-bold">284+ people</span> got their goal date today
-              </span>
-            </div>
+            {/* Urgency Element removed */}
 
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-slate-500 text-sm">
@@ -323,23 +275,7 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Stats Bar */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pb-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              { value: userCount.toLocaleString() + '+', label: 'Active Users', icon: Users },
-              { value: predictionsCount.toLocaleString(), label: 'Predictions Made', icon: Brain },
-              { value: '4.9', label: 'User Rating', icon: Star },
-              { value: '100%', label: 'Free Features', icon: Award },
-            ].map((stat, i) => (
-              <div key={i} className="glass border border-slate-700/50 rounded-2xl p-4 md:p-6 text-center hover:border-amber-500/30 transition-colors">
-                <stat.icon className="w-5 h-5 text-amber-400 mx-auto mb-2" />
-                <div className="text-2xl md:text-3xl font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-slate-500 text-xs md:text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Stats Bar removed */}
 
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
       </header>
@@ -498,50 +434,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 sm:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              They Knew Their Date.
-              <span className="text-amber-400"> They Hit It.</span>
-            </h2>
-            <p className="text-slate-400 text-lg">
-              10,847+ success stories. Yours could be next. 👇
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <div key={i} className="glass border border-slate-700/50 rounded-2xl p-6 md:p-8 hover:border-amber-500/30 transition-colors">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex gap-1">
-                    {[...Array(t.rating)].map((_, j) => (
-                      <Star key={j} size={18} className="text-amber-400 fill-amber-400" />
-                    ))}
-                  </div>
-                  {t.verified && (
-                    <div className="flex items-center gap-1 text-emerald-400 text-xs font-semibold">
-                      <CheckCircle2 size={14} />
-                      <span>Verified</span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-slate-300 leading-relaxed mb-6 italic">"{t.content}"</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-2xl">
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <div className="font-semibold">{t.name}</div>
-                    <div className="text-slate-500 text-sm">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Testimonials removed */}
 
       {/* Comparison Table */}
       <section className="py-20 sm:py-28 bg-slate-900/30">
