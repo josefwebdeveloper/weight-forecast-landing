@@ -351,8 +351,8 @@ const LandingPage: React.FC = () => {
           <div className="glass border border-amber-500/20 rounded-3xl p-6 sm:p-12 shadow-2xl overflow-hidden relative">
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
 
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative z-10">
+            <div className="flex flex-col gap-12 items-center text-center">
+              <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
                   <Sparkles size={16} />
                   See It In Action
@@ -360,22 +360,22 @@ const LandingPage: React.FC = () => {
                 <h2 className="text-3xl sm:text-5xl font-bold mb-6 leading-tight">
                   Log your meals with <span className="text-amber-400">just your voice.</span>
                 </h2>
-                <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                <p className="text-slate-400 text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
                   No more tedious manual tracking. Just tap the microphone and say what you ate. Our AI instantly extracts the food items, estimates the calories, and updates your goal date forecast. It's like having a personal dietitian and coach in your pocket.
                 </p>
 
-                <div className="space-y-4 mb-8">
+                <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-3xl mx-auto">
                   {[
                     "Say 'I had a bowl of oatmeal and a banana'",
                     "AI instantly calculates calories and logs the meal",
                     "Your goal date adjusts automatically based on your intake",
                     "Supports multiple languages including Russian and English"
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
+                    <div key={i} className="flex items-center gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-700/50">
                       <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
                         <CheckCircle2 size={14} />
                       </div>
-                      <span className="text-slate-300">{item}</span>
+                      <span className="text-slate-300 text-sm leading-snug">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -383,23 +383,23 @@ const LandingPage: React.FC = () => {
                 <a
                   href={APP_URL}
                   onClick={() => trackEvent('cta_click', { location: 'video_demo', cta_text: 'Try Voice Logging' })}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 border border-amber-400 rounded-xl font-bold text-lg shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-1"
                 >
-                  <Brain size={18} className="text-amber-400" />
+                  <Brain size={20} />
                   Try Voice Logging Free
                 </a>
               </div>
 
-              <div className="relative mx-auto w-full perspective-1000 z-10">
-                <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-[1rem] blur opacity-30 animate-pulse-glow" />
-                <div className="relative bg-slate-950 rounded-xl border border-slate-800 shadow-2xl overflow-hidden">
+              <div className="relative w-full z-10">
+                <div className="absolute -inset-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-30 animate-pulse-glow" />
+                <div className="relative bg-slate-950 rounded-xl border border-slate-800 shadow-2xl overflow-hidden flex justify-center w-full">
                   <video
                     src="/demo-video.mov"
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="w-full h-auto max-h-[80vh] object-contain rounded-xl"
+                    className="w-full max-h-[85vh] object-contain rounded-xl bg-black"
                   />
                 </div>
               </div>
