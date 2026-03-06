@@ -390,16 +390,16 @@ const LandingPage: React.FC = () => {
                 </a>
               </div>
 
-              <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:max-w-md perspective-1000 z-10">
-                <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-[2.5rem] blur opacity-30 animate-pulse-glow" />
-                <div className="relative bg-slate-950 rounded-[2rem] border-[6px] border-slate-800 shadow-2xl overflow-hidden aspect-[9/19.5]">
+              <div className="relative mx-auto w-full perspective-1000 z-10">
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-[1rem] blur opacity-30 animate-pulse-glow" />
+                <div className="relative bg-slate-950 rounded-xl border border-slate-800 shadow-2xl overflow-hidden">
                   <video
                     src="/demo-video.mov"
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto max-h-[80vh] object-contain rounded-xl"
                   />
                 </div>
               </div>
