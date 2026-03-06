@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Scale, 
-  TrendingDown, 
-  Brain, 
-  BarChart3, 
-  Smartphone, 
+import {
+  Scale,
+  TrendingDown,
+  Brain,
+  BarChart3,
+  Smartphone,
   Shield,
   CheckCircle2,
   ArrowRight,
@@ -44,7 +44,7 @@ const trackEvent = (eventName: string, params?: Record<string, any>) => {
 // Animated counter hook
 const useCounter = (end: number, duration: number = 2000) => {
   const [count, setCount] = useState(0);
-  
+
   useEffect(() => {
     let startTime: number;
     const animate = (timestamp: number) => {
@@ -55,7 +55,7 @@ const useCounter = (end: number, duration: number = 2000) => {
     };
     requestAnimationFrame(animate);
   }, [end, duration]);
-  
+
   return count;
 };
 
@@ -63,12 +63,12 @@ const LandingPage: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const userCount = useCounter(10847, 2500);
   const predictionsCount = useCounter(284691, 3000);
-  
+
   // Track scroll depth
   useEffect(() => {
     const trackScroll = () => {
       const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      
+
       if (scrollPercent > 25 && !sessionStorage.getItem('scroll_25')) {
         trackEvent('scroll_depth', { depth: 25 });
         sessionStorage.setItem('scroll_25', 'true');
@@ -86,11 +86,11 @@ const LandingPage: React.FC = () => {
         sessionStorage.setItem('scroll_100', 'true');
       }
     };
-    
+
     window.addEventListener('scroll', trackScroll);
     return () => window.removeEventListener('scroll', trackScroll);
   }, []);
-  
+
   const features = [
     {
       icon: Brain,
@@ -219,12 +219,12 @@ const LandingPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-slate-950 to-orange-900/20" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[800px] bg-amber-500/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[100px]" />
-        
+
         {/* Floating particles */}
         <div className="absolute top-20 left-20 w-2 h-2 bg-amber-400 rounded-full animate-float opacity-60" />
         <div className="absolute top-40 right-40 w-3 h-3 bg-orange-400 rounded-full animate-float opacity-40" style={{ animationDelay: '1s' }} />
         <div className="absolute bottom-40 left-1/3 w-2 h-2 bg-yellow-400 rounded-full animate-float opacity-50" style={{ animationDelay: '2s' }} />
-        
+
         {/* Navigation */}
         <nav className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -261,14 +261,14 @@ const LandingPage: React.FC = () => {
                 <span className="font-bold">{userCount.toLocaleString()}+</span> people forecasting their goals
               </span>
             </div>
-            
+
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">
               Know <span className="underline decoration-amber-500 decoration-4">Exactly</span> When
               <span className="block bg-gradient-to-r from-amber-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-gradient">
                 You'll Hit Your Goal Weight
               </span>
             </h1>
-            
+
             <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
               Stop wondering <span className="text-slate-300 italic">"How long will this take?"</span>
               <span className="block mt-2 text-white font-semibold">Our AI tells you the EXACT DATE.</span>
@@ -292,7 +292,7 @@ const LandingPage: React.FC = () => {
                 See How It Works
               </a>
             </div>
-            
+
             {/* Urgency Element */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full text-red-300 text-sm font-medium mb-4">
               <Zap size={14} className="animate-pulse" />
@@ -343,6 +343,70 @@ const LandingPage: React.FC = () => {
 
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
       </header>
+
+      {/* Video Demo Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-transparent" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="glass border border-amber-500/20 rounded-3xl p-6 sm:p-12 shadow-2xl overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
+                  <Sparkles size={16} />
+                  See It In Action
+                </div>
+                <h2 className="text-3xl sm:text-5xl font-bold mb-6 leading-tight">
+                  Log your meals with <span className="text-amber-400">just your voice.</span>
+                </h2>
+                <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+                  No more tedious manual tracking. Just tap the microphone and say what you ate. Our AI instantly extracts the food items, estimates the calories, and updates your goal date forecast. It's like having a personal dietitian and coach in your pocket.
+                </p>
+
+                <div className="space-y-4 mb-8">
+                  {[
+                    "Say 'I had a bowl of oatmeal and a banana'",
+                    "AI instantly calculates calories and logs the meal",
+                    "Your goal date adjusts automatically based on your intake",
+                    "Supports multiple languages including Russian and English"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle2 size={14} />
+                      </div>
+                      <span className="text-slate-300">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <a
+                  href={APP_URL}
+                  onClick={() => trackEvent('cta_click', { location: 'video_demo', cta_text: 'Try Voice Logging' })}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl font-semibold transition-colors"
+                >
+                  <Brain size={18} className="text-amber-400" />
+                  Try Voice Logging Free
+                </a>
+              </div>
+
+              <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[320px] lg:max-w-md perspective-1000 z-10">
+                <div className="absolute -inset-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-[2.5rem] blur opacity-30 animate-pulse-glow" />
+                <div className="relative bg-slate-950 rounded-[2rem] border-[6px] border-slate-800 shadow-2xl overflow-hidden aspect-[9/19.5]">
+                  <video
+                    src="/demo-video.mov"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features Section */}
       <section id="features" className="py-20 sm:py-28 relative">
@@ -505,9 +569,9 @@ const LandingPage: React.FC = () => {
                   {row.us ? <CheckCircle2 className="text-emerald-400 mx-auto" size={20} /> : '—'}
                 </div>
                 <div className="text-center">
-                  {row.others === true ? <CheckCircle2 className="text-slate-500 mx-auto" size={20} /> : 
-                   row.others === '💰' ? <span title="Paid feature">💰</span> : 
-                   <span className="text-slate-600">—</span>}
+                  {row.others === true ? <CheckCircle2 className="text-slate-500 mx-auto" size={20} /> :
+                    row.others === '💰' ? <span title="Paid feature">💰</span> :
+                      <span className="text-slate-600">—</span>}
                 </div>
               </div>
             ))}
@@ -570,7 +634,7 @@ const LandingPage: React.FC = () => {
                 <span className="block text-amber-400">Start Knowing.</span>
               </h2>
               <p className="text-slate-400 text-lg mb-4 max-w-xl mx-auto">
-                Your exact goal date is <span className="text-white font-semibold">one click away</span>. 
+                Your exact goal date is <span className="text-white font-semibold">one click away</span>.
                 Join 10,847+ people who already know theirs.
               </p>
               <p className="text-amber-300 text-base mb-8 max-w-xl mx-auto font-medium">
@@ -602,7 +666,7 @@ const LandingPage: React.FC = () => {
               </div>
               <span className="font-bold">Weight Forecast</span>
             </div>
-            
+
             <div className="flex items-center gap-2 text-slate-500 text-sm">
               <Globe size={14} />
               <span>Made with ❤️ for a healthier world</span>
@@ -616,7 +680,7 @@ const LandingPage: React.FC = () => {
               <a href="mailto:working.projects.info@gmail.com" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
-          
+
           <div className="mt-8 pt-8 border-t border-slate-800/50 text-center text-slate-600 text-sm">
             © {new Date().getFullYear()} Weight Forecast. All rights reserved.
           </div>
