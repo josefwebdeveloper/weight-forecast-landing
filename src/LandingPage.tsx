@@ -74,32 +74,32 @@ const LandingPage: React.FC = () => {
   const features = [
     {
       icon: Brain,
-      title: '🎯 AI Predicts Your Goal Date',
-      description: 'Stop asking "when?" — Our AI tells you the EXACT DATE you\'ll hit your target weight. Updates daily as you log.',
+      title: '🎯 We help you foresee the future',
+      description: 'Stop guessing "when?" — Our AI calculates the EXACT DATE you will hit your target weight. We do the math for you daily.',
       color: 'text-amber-400',
       bg: 'bg-amber-500/10',
       border: 'border-amber-500/20'
     },
     {
       icon: Mic,
-      title: '🎙️ Voice Meal Logging',
-      description: 'Log meals with just your voice. AI extracts the food items and estimates calories instantly. Supports English & Russian.',
+      title: '🎙️ We help you log meals instantly',
+      description: 'Just use your voice. We extract the food items, estimate calories, and log them—so you don\'t have to type a thing.',
       color: 'text-red-400',
       bg: 'bg-red-500/10',
       border: 'border-red-500/20'
     },
     {
       icon: Sparkles,
-      title: '📸 AI Food Scanner',
-      description: 'Take a photo of your food  → Get calories instantly. No manual typing or database searching needed.',
+      title: '📸 We help you scan your food',
+      description: 'Take a photo, and our AI does the heavy lifting. No more databases or manual entry. We calculate the calories for you.',
       color: 'text-purple-400',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20'
     },
     {
       icon: MessageCircle,
-      title: '🤖 Telegram AI Coach',
-      description: 'Get daily actionable insight plans and an AI-generated weekly 60s podcast summarizing your progress directly in Telegram.',
+      title: '🤖 We help you stay on track',
+      description: 'Your Telegram AI Coach delivers daily actionable plans and a weekly 60s personalized podcast to keep you perfectly aligned.',
       color: 'text-blue-400',
       bg: 'bg-blue-500/10',
       border: 'border-blue-500/20'
@@ -114,16 +114,16 @@ const LandingPage: React.FC = () => {
     },
     {
       icon: Activity,
-      title: '📉 Plateau Intervention',
-      description: 'Mathematical plateau detection triggers custom coaching interventions (e.g. re-feed days or sleep focus).',
+      title: '📉 We help you break plateaus',
+      description: 'Our mathematical plateau detection triggers custom coaching interventions (e.g. re-feed days) so we can keep your progress moving.',
       color: 'text-emerald-400',
       bg: 'bg-emerald-500/10',
       border: 'border-emerald-500/20'
     },
     {
       icon: Award,
-      title: '🏆 Consistency Badges',
-      description: 'Earn rewards for building the habits, not just the results. E.g. "Logged 7 days in a row", "Hit protein goals".',
+      title: '🏆 We help you build habits',
+      description: 'We track your consistency and reward you for showing up. Building the habit is half the job, and we guide you there.',
       color: 'text-yellow-400',
       bg: 'bg-yellow-500/10',
       border: 'border-yellow-500/20'
@@ -138,8 +138,8 @@ const LandingPage: React.FC = () => {
     },
     {
       icon: Globe,
-      title: '💪 Offline Mastery',
-      description: 'Fully operational offline mode. Log food and weight with zero internet, and sync perfectly when back online.',
+      title: '💪 We help you anywhere',
+      description: 'Fully operational offline mode. Log food and weight with zero internet, and we will sync it perfectly when back online.',
       color: 'text-pink-400',
       bg: 'bg-pink-500/10',
       border: 'border-pink-500/20'
@@ -222,24 +222,31 @@ const LandingPage: React.FC = () => {
             {/* Social Proof Badge removed */}
 
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">
-              Know <span className="underline decoration-amber-500 decoration-4">Exactly</span> When
-              <span className="block bg-gradient-to-r from-amber-300 via-orange-400 to-red-400 bg-clip-text text-transparent animate-gradient">
-                You'll Hit Your Goal Weight
-              </span>
+              We <span className="underline decoration-amber-500 decoration-4">will help</span> you!
             </h1>
 
-            <p className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Stop wondering <span className="text-slate-300 italic">"How long will this take?"</span>
-              <span className="block mt-2 text-white font-semibold">Our AI tells you the EXACT DATE.</span>
-            </p>
+            <div className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-medium space-y-4">
+              <p className="flex items-center justify-center gap-3">
+                 <CheckCircle2 className="text-amber-400 shadow-amber-400 shadow-sm rounded-full" size={24} />
+                 <span>We will help you <span className="text-white font-bold">get lean and burn fat</span></span>
+              </p>
+              <p className="flex items-center justify-center gap-3">
+                 <CheckCircle2 className="text-amber-400 shadow-amber-400 shadow-sm rounded-full" size={24} />
+                 <span>We will help you <span className="text-white font-bold">complete your daily habits effortlessly</span></span>
+              </p>
+              <p className="flex items-center justify-center gap-3">
+                 <CheckCircle2 className="text-amber-400 shadow-amber-400 shadow-sm rounded-full" size={24} />
+                 <span>We will help you <span className="text-white font-bold">hit your goal weight exactly on time</span></span>
+              </p>
+            </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <a
                 href={APP_URL}
-                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Get My Goal Date' })}
+                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Let Us Help You' })}
                 className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 flex items-center justify-center gap-2"
               >
-                🎯 Get My Goal Date (FREE)
+                🚀 Let Us Help You (FREE)
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <a
@@ -294,10 +301,10 @@ const LandingPage: React.FC = () => {
                   See It In Action
                 </div>
                 <h2 className="text-3xl sm:text-5xl font-bold mb-6 leading-tight">
-                  Log your meals with <span className="text-amber-400">just your voice.</span>
+                  We log your meals for you from <span className="text-amber-400">just your voice.</span>
                 </h2>
                 <p className="text-slate-400 text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
-                  No more tedious manual tracking. Just tap the microphone and say what you ate. Our AI instantly extracts the food items, estimates the calories, and updates your goal date forecast. It's like having a personal dietitian and coach in your pocket.
+                  No more tedious manual tracking. Just tap the microphone and say what you ate. We do the work for you: extracting food items, estimating calories, and bringing you closer to your goals. Our AI is the assistant that gets the job done.
                 </p>
 
                 <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-3xl mx-auto">
@@ -351,14 +358,14 @@ const LandingPage: React.FC = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
               <Sparkles size={16} />
-              Powerful Features
+              Advanced Job Done
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              Why People Hit Their Goals
-              <span className="text-amber-400"> 2x Faster With Us</span>
+              How We Get The
+              <span className="text-amber-400"> Job Done For You</span>
             </h2>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Not just another weight tracker — a <span className="text-white font-semibold">scientific prediction system</span> that keeps you motivated.
+              Not just another weight tracker — an <span className="text-white font-semibold">advanced assistant</span> that does the heavy lifting to keep you motivated.
             </p>
           </div>
 
@@ -523,22 +530,22 @@ const LandingPage: React.FC = () => {
                 Get your goal date in 60 seconds
               </div>
               <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-                Stop Wondering "When?"
-                <span className="block text-amber-400">Start Knowing.</span>
+                Let Us Help You Hit Your Goal.
+                <span className="block text-amber-400">Start Now.</span>
               </h2>
               <p className="text-slate-400 text-lg mb-4 max-w-xl mx-auto">
-                Your exact goal date is <span className="text-white font-semibold">one click away</span>.
-                Join 10,847+ people who already know theirs.
+                Your personal assistant is <span className="text-white font-semibold">ready to work for you</span>.
+                Join 10,847+ people who are getting the job done.
               </p>
               <p className="text-amber-300 text-base mb-8 max-w-xl mx-auto font-medium">
-                ⚡ No guessing. No wondering. Just results.
+                ⚡ We take care of the details. You get the results.
               </p>
               <a
                 href={APP_URL}
-                onClick={() => trackEvent('cta_click', { location: 'final_cta', cta_text: 'Show Me My Goal Date' })}
+                onClick={() => trackEvent('cta_click', { location: 'final_cta', cta_text: 'Let Us Help You' })}
                 className="group px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-xl text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 inline-flex items-center justify-center gap-2"
               >
-                🎯 Show Me My Goal Date (FREE)
+                🚀 Let Us Help You (FREE)
                 <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <p className="text-slate-500 text-sm mt-4">
