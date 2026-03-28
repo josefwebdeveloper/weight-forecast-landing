@@ -49,7 +49,7 @@ const BlogPost: React.FC = () => {
         </Link>
         <div className="flex items-center gap-4">
           <Link to="/blog" className="text-slate-400 hover:text-white transition-colors text-sm">
-            ← All Articles
+            All Articles
           </Link>
           <a
             href={APP_URL}
@@ -114,7 +114,7 @@ const BlogPost: React.FC = () => {
             href={APP_URL}
             className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-xl hover:shadow-amber-500/25"
           >
-            🚀 Let Us Help You (FREE)
+            Let Us Help You (FREE)
             <ArrowRight size={20} />
           </a>
         </div>
@@ -126,7 +126,7 @@ const BlogPost: React.FC = () => {
               to={`/blog/${prevArticle.slug}`}
               className="group p-5 rounded-xl border border-slate-800 hover:border-amber-500/30 transition-all bg-slate-900/30"
             >
-              <span className="text-xs text-slate-500 uppercase tracking-wider">← Previous</span>
+              <span className="text-xs text-slate-500 uppercase tracking-wider">Previous</span>
               <h4 className="text-sm font-semibold mt-2 group-hover:text-amber-400 transition-colors leading-snug">
                 {prevArticle.title}
               </h4>

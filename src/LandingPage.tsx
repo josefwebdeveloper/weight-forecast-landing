@@ -4,7 +4,7 @@ import {
   Smartphone,
   Shield,
   CheckCircle2,
-  ArrowRight,
+
   Zap,
   Target,
   Calendar,
@@ -214,7 +214,7 @@ const LandingPage: React.FC = () => {
               onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Launch App' })}
               className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/25 text-slate-950 text-sm"
             >
-              Launch App →
+              Launch App
             </a>
           </div>
         </nav>
@@ -249,8 +249,7 @@ const LandingPage: React.FC = () => {
                 onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Let Us Help You' })}
                 className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 flex items-center justify-center gap-2"
               >
-                🚀 Let Us Help You (FREE)
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                Let Us Help You (FREE)
               </a>
               <a
                 href="#how-it-works"
@@ -548,8 +547,7 @@ const LandingPage: React.FC = () => {
                 onClick={() => trackEvent('cta_click', { location: 'final_cta', cta_text: 'Let Us Help You' })}
                 className="group px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-xl text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 inline-flex items-center justify-center gap-2"
               >
-                🚀 Let Us Help You (FREE)
-                <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                Let Us Help You (FREE)
               </a>
               <p className="text-slate-500 text-sm mt-4">
                 ✓ Free forever • ✓ No credit card • ✓ Start in 60 seconds

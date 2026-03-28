@@ -95,7 +95,7 @@ const BlogIndex: React.FC = () => {
               href={APP_URL}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-xl hover:shadow-amber-500/25"
             >
-              🚀 Try Weight Forecast Free
+              Try Weight Forecast Free
               <ArrowRight size={20} />
             </a>
           </div>
