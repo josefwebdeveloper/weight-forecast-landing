@@ -206,6 +206,9 @@ const LandingPage: React.FC = () => {
             <a href="#faq" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
               FAQ
             </a>
+            <a href="/blog" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
+              Blog
+            </a>
             <a
               href={APP_URL}
               onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Launch App' })}
@@ -575,6 +578,7 @@ const LandingPage: React.FC = () => {
             <div className="flex gap-6 text-sm text-slate-400">
               <a href="#features" className="hover:text-white transition-colors">Features</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+              <a href="/blog" className="hover:text-white transition-colors">Blog</a>
               <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
               <a href="/terms" className="hover:text-white transition-colors">Terms</a>
               <a href="mailto:working.projects.info@gmail.com" className="hover:text-white transition-colors">Contact</a>
