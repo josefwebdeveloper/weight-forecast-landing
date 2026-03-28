@@ -129,6 +129,14 @@ const LandingPage: React.FC = () => {
       border: 'border-yellow-500/20'
     },
     {
+      icon: Activity,
+      title: '⌚️ Garmin & Wearables Sync',
+      description: 'Connect your Garmin, Strava, or Apple Health. We automatically sync your activity, sleep, and recovery data to make our AI even smarter.',
+      color: 'text-orange-400',
+      bg: 'bg-orange-500/10',
+      border: 'border-orange-500/20'
+    },
+    {
       icon: BookOpen,
       title: '📔 Daily Diary & Day Rating',
       description: 'Write daily entries and rate your day (1-5 stars) to visually map how your mood tracks with your progress.',
@@ -138,8 +146,8 @@ const LandingPage: React.FC = () => {
     },
     {
       icon: Globe,
-      title: '💪 We help you anywhere',
-      description: 'Fully operational offline mode. Log food and weight with zero internet, and we will sync it perfectly when back online.',
+      title: '💪 Fully Operational Offline',
+      description: 'Log food and weight with zero internet. We sync everything perfectly when you are back online. Perfect for travel.',
       color: 'text-pink-400',
       bg: 'bg-pink-500/10',
       border: 'border-pink-500/20'
@@ -164,6 +172,10 @@ const LandingPage: React.FC = () => {
       a: 'Yes! Weight Forecast is a Progressive Web App. Your data saves locally and syncs when online. Install it like a native app on any device.'
     },
     {
+      q: 'Does it work with Garmin or Apple Health?',
+      a: 'Yes! You can connect Garmin, Strava, and Apple Health. We use your activity and sleep data to refine our weight predictions and help you understand how exercise impacts your progress.'
+    },
+    {
       q: 'Is my data private?',
       a: 'Absolutely. Your data is encrypted and never sold. We use Firebase with strict security rules. You can export or delete your data anytime.'
     }
@@ -176,6 +188,7 @@ const LandingPage: React.FC = () => {
     { feature: 'Time Travel Timelapse Videos', us: true, others: false },
     { feature: 'Plateau Intervention & Adjustments', us: true, others: false },
     { feature: 'Daily Diary & 1-5 Star Ratings', us: true, others: false },
+    { feature: 'Garmin & Apple Health Sync', us: true, others: '💰' },
     { feature: 'Full Offline Functionality', us: true, others: '💰' },
     { feature: 'Completely Free Forever', us: true, others: false },
   ];
