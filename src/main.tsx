@@ -6,6 +6,7 @@ import Privacy from './Privacy';
 import Terms from './Terms';
 import BlogIndex from './blog/BlogIndex';
 import BlogPost from './blog/BlogPost';
+import VsMacroFactor from './VsMacroFactor';
 import { registerWebMCPTools } from './webmcp';
 
 registerWebMCPTools();
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/terms" element={<Terms />} />
         <Route path="/blog" element={<BlogIndex />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/vs/macrofactor" element={<VsMacroFactor />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

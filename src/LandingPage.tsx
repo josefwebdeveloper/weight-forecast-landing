@@ -21,6 +21,10 @@ import {
   MessageCircle,
   Video
 } from 'lucide-react';
+import GoalDateCalculator from './GoalDateCalculator';
+import CaseStudies from './CaseStudies';
+import TelegramCoach from './TelegramCoach';
+import { Link } from 'react-router-dom';
 
 // TypeScript declaration for gtag
 declare global {
@@ -216,6 +220,12 @@ const LandingPage: React.FC = () => {
             <span className="text-xl font-bold tracking-tight">Weight Forecast</span>
           </div>
           <div className="flex items-center gap-4">
+            <a href="#stories" className="hidden md:block text-slate-400 hover:text-white transition-colors text-sm">
+              Stories
+            </a>
+            <Link to="/vs/macrofactor" className="hidden md:block text-slate-400 hover:text-white transition-colors text-sm">
+              vs MacroFactor
+            </Link>
             <a href="#faq" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
               FAQ
             </a>
@@ -294,10 +304,10 @@ const LandingPage: React.FC = () => {
                 <span>Free Forever</span>
               </div>
             </div>
+
+            <GoalDateCalculator />
           </div>
         </div>
-
-        {/* Stats Bar removed */}
 
         <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
       </header>
@@ -365,6 +375,8 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <TelegramCoach />
 
       {/* Features Section */}
       <section id="features" className="py-20 sm:py-28 relative">
@@ -456,7 +468,7 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials removed */}
+      <CaseStudies />
 
       {/* Comparison Table */}
       <section className="py-20 sm:py-28 bg-slate-900/30">
@@ -466,9 +478,16 @@ const LandingPage: React.FC = () => {
               Why We're
               <span className="text-amber-400"> Different</span>
             </h2>
-            <p className="text-slate-400 text-lg">
+            <p className="text-slate-400 text-lg mb-4">
               See what other apps are missing.
             </p>
+            <Link
+              to="/vs/macrofactor"
+              onClick={() => trackEvent('navigation_click', { destination: 'vs_macrofactor' })}
+              className="inline-flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+            >
+              Full comparison vs MacroFactor →
+            </Link>
           </div>
 
           <div className="glass border border-slate-700/50 rounded-2xl overflow-hidden">
@@ -586,8 +605,10 @@ const LandingPage: React.FC = () => {
               <span>Made with ❤️ for a healthier world</span>
             </div>
 
-            <div className="flex gap-6 text-sm text-slate-400">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-400">
               <a href="#features" className="hover:text-white transition-colors">Features</a>
+              <a href="#stories" className="hover:text-white transition-colors">Stories</a>
+              <Link to="/vs/macrofactor" className="hover:text-white transition-colors">vs MacroFactor</Link>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
               <a href="/blog" className="hover:text-white transition-colors">Blog</a>
               <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
