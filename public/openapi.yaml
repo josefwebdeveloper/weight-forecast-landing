@@ -1,0 +1,167 @@
+openapi: 3.1.0
+info:
+  title: Weight Forecast API
+  summary: Backend REST API for Weight Forecast — AI-powered weight prediction and tracking.
+  description: |
+    Minimal public description of the Weight Forecast backend. The full service
+    surface is evolving; this document enumerates the stable endpoints agents
+    can rely on. Most endpoints require a Google OAuth-issued JWT supplied as
+    `Authorization: Bearer <token>`.
+  version: 1.0.0
+  contact:
+    name: Weight Forecast
+    url: https://weight-forecast.com
+  license:
+    name: Proprietary
+servers:
+  - url: https://node-log-weight-tennisappservicegmailcoms-projects.vercel.app
+    description: Production
+  - url: http://localhost:3002
+    description: Local development
+tags:
+  - name: health
+    description: Liveness and readiness probes.
+  - name: auth
+    description: Session / token endpoints for Google sign-in.
+  - name: weight-entries
+    description: Daily weight entries, statistics and photos.
+paths:
+  /api/health:
+    get:
+      tags: [health]
+      summary: Liveness probe
+      operationId: getHealth
+      security: []
+      responses:
+        '200':
+          description: Service is up
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+                  uptime: { type: number }
+  /api/auth/google:
+    post:
+      tags: [auth]
+      summary: Exchange a Google ID token for a session JWT
+      operationId: exchangeGoogleIdToken
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [credential]
+              properties:
+                credential:
+                  type: string
+                  description: Google ID token from GIS One Tap / button.
+      responses:
+        '200':
+          description: Session token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  userId: { type: string }
+  /api/weight-entries:
+    get:
+      tags: [weight-entries]
+      summary: List weight entries for the authenticated user
+      operationId: listWeightEntries
+      responses:
+        '200':
+          description: Array of entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/WeightEntry' }
+    post:
+      tags: [weight-entries]
+      summary: Create a new weight entry
+      operationId: createWeightEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WeightEntryInput' }
+      responses:
+        '201': { description: Created }
+    put:
+      tags: [weight-entries]
+      summary: Upsert a weight entry for a given date
+      operationId: upsertWeightEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WeightEntryInput' }
+      responses:
+        '200': { description: Upserted }
+  /api/weight-entries/by-date/{date}:
+    parameters:
+      - in: path
+        name: date
+        required: true
+        schema: { type: string, format: date }
+    get:
+      tags: [weight-entries]
+      summary: Get the entry for a specific date
+      operationId: getWeightEntryByDate
+      responses:
+        '200':
+          description: Weight entry
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/WeightEntry' }
+        '404': { description: Not found }
+    delete:
+      tags: [weight-entries]
+      summary: Delete the entry for a specific date
+      operationId: deleteWeightEntryByDate
+      responses:
+        '204': { description: Deleted }
+  /api/weight-entries/statistics:
+    get:
+      tags: [weight-entries]
+      summary: Aggregate statistics for the authenticated user
+      operationId: getStatistics
+      responses:
+        '200':
+          description: Statistics payload
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count: { type: integer }
+                  averageWeight: { type: number }
+                  trend: { type: string, enum: [up, down, flat] }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    WeightEntry:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        morningWeight: { type: number, nullable: true }
+        eveningWeight: { type: number, nullable: true }
+        calories: { type: number, nullable: true }
+        workout: { type: string, nullable: true }
+        notes: { type: string, nullable: true }
+    WeightEntryInput:
+      allOf:
+        - $ref: '#/components/schemas/WeightEntry'
+      required: [date]
+security:
+  - bearerAuth: []

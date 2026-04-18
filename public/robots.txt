@@ -1,11 +1,21 @@
-# Weight Forecast Landing Page
+# Weight Forecast — public landing (www.weight-forecast.com)
+# https://contentsignals.org/ — draft-romm-aipref-contentsignals
+# search=yes  : allow traditional search indexing and snippets
+# ai-train=no : disallow training generative AI models on this content
+# ai-input=yes: allow retrieval-augmented / grounded AI answers that cite the site
+Content-Signal: search=yes, ai-train=no, ai-input=yes
+
 User-agent: *
+Content-Signal: search=yes, ai-train=no, ai-input=yes
 Allow: /
+
+# Explicitly allow agent discovery endpoints
+Allow: /.well-known/
+Allow: /index.md
+Allow: /openapi.yaml
 
 # Sitemap
 Sitemap: https://www.weight-forecast.com/sitemap.xml
 
-# Crawl-delay for respectful crawling
+# Be polite
 Crawl-delay: 1
-
-

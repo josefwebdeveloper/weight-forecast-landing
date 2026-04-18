@@ -1,0 +1,40 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://node-log-weight-tennisappservicegmailcoms-projects.vercel.app",
+      "service-desc": [
+        {
+          "href": "https://www.weight-forecast.com/openapi.yaml",
+          "type": "application/yaml",
+          "title": "Weight Forecast REST API \u2014 OpenAPI 3.1 description"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://www.weight-forecast.com/index.md",
+          "type": "text/markdown",
+          "title": "Weight Forecast overview (markdown)"
+        },
+        {
+          "href": "https://www.weight-forecast.com/blog",
+          "type": "text/html",
+          "title": "Weight Forecast blog \u2014 long-form articles"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://node-log-weight-tennisappservicegmailcoms-projects.vercel.app/api/health",
+          "type": "application/json",
+          "title": "API health endpoint"
+        }
+      ],
+      "service-meta": [
+        {
+          "href": "https://www.weight-forecast.com/.well-known/agent-skills/index.json",
+          "type": "application/json",
+          "title": "Agent skills discovery index"
+        }
+      ]
+    }
+  ]
+}

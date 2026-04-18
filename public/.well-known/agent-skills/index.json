@@ -1,0 +1,32 @@
+{
+  "$schema": "https://agentskills.io/schemas/v0.2.0/index.json",
+  "version": "0.2.0",
+  "owner": {
+    "name": "Weight Forecast",
+    "url": "https://www.weight-forecast.com"
+  },
+  "updated": "2026-04-18",
+  "skills": [
+    {
+      "name": "open-app",
+      "type": "webmcp",
+      "description": "Open the Weight Forecast application (signed-in area) in the user's browser to start tracking weight or view their forecast.",
+      "url": "https://www.weight-forecast.com/.well-known/agent-skills/open-app/SKILL.md",
+      "sha256": "09f97f40e8dbb0a7d0e5914f7102091ce7496e86b23c7224573424fd1638ae03"
+    },
+    {
+      "name": "list-articles",
+      "type": "webmcp",
+      "description": "List Weight Forecast blog articles (title, slug, date, category, excerpt) for agent-assisted content discovery.",
+      "url": "https://www.weight-forecast.com/.well-known/agent-skills/list-articles/SKILL.md",
+      "sha256": "3ee43ac686d0fbe9030e8f8818d2745183fa225c5355cb2d1ab3251f664001b9"
+    },
+    {
+      "name": "read-article",
+      "type": "webmcp",
+      "description": "Return the full text of a Weight Forecast blog article by slug, including title, date, category, reading time and body.",
+      "url": "https://www.weight-forecast.com/.well-known/agent-skills/read-article/SKILL.md",
+      "sha256": "52e50cab9c80c878d6064d0ae6833e17b0f52ab30e1a64f8d9b4269f30c85f88"
+    }
+  ]
+}

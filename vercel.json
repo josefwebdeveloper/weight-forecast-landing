@@ -4,9 +4,135 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/|\\.well-known/|openapi\\.yaml|index\\.md|robots\\.txt|sitemap\\.xml|manifest\\.json|favicon|apple-touch-icon|icon\\.svg|og-image|demo-video|assets/).*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </openapi.yaml>; rel=\"service-desc\"; type=\"application/yaml\", </index.md>; rel=\"alternate\"; type=\"text/markdown\", </.well-known/agent-skills/index.json>; rel=\"https://agentskills.io/rel/index\"; type=\"application/json\", <https://weight-forecast.com/>; rel=\"canonical\""
+        },
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</.well-known/api-catalog>; rel=\"api-catalog\"; type=\"application/linkset+json\", </openapi.yaml>; rel=\"service-desc\"; type=\"application/yaml\", </index.md>; rel=\"alternate\"; type=\"text/markdown\", </.well-known/agent-skills/index.json>; rel=\"https://agentskills.io/rel/index\"; type=\"application/json\""
+        },
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
+    {
+      "source": "/blog",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</.well-known/agent-skills/list-articles/SKILL.md>; rel=\"describedby\"; type=\"text/markdown\", </index.md>; rel=\"alternate\"; type=\"text/markdown\""
+        },
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/api-catalog",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/linkset+json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/agent-skills/index.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/agent-skills/(.*)\\.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/openapi.yaml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/yaml; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/index.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=300, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
     }
   ]
 }
-

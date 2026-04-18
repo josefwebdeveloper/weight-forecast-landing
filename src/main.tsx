@@ -6,6 +6,9 @@ import Privacy from './Privacy';
 import Terms from './Terms';
 import BlogIndex from './blog/BlogIndex';
 import BlogPost from './blog/BlogPost';
+import { registerWebMCPTools } from './webmcp';
+
+registerWebMCPTools();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
