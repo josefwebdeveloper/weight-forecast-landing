@@ -1,10 +1,17 @@
 import React from 'react';
 import { Banana, Shield, Mail, Globe } from 'lucide-react';
+import { usePageMeta } from './usePageMeta';
 
 const APP_URL = 'https://weight-forecast.com';
 const LANDING_URL = 'https://www.weight-forecast.com';
 
 const Privacy: React.FC = () => {
+  usePageMeta({
+    title: 'Privacy Policy — Weight Forecast',
+    description: 'How Weight Forecast collects, uses, and protects your personal weight and health data.',
+    canonical: `${LANDING_URL}/privacy`,
+  });
+
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Navigation */}

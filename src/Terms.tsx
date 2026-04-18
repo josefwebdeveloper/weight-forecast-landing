@@ -1,10 +1,17 @@
 import React from 'react';
 import { Banana, FileText, Mail, Globe } from 'lucide-react';
+import { usePageMeta } from './usePageMeta';
 
 const APP_URL = 'https://weight-forecast.com';
 const LANDING_URL = 'https://www.weight-forecast.com';
 
 const Terms: React.FC = () => {
+  usePageMeta({
+    title: 'Terms of Service — Weight Forecast',
+    description: 'Terms of use for Weight Forecast — what you agree to when using the app and the landing site.',
+    canonical: `${LANDING_URL}/terms`,
+  });
+
   return (
     <div className="min-h-screen bg-slate-950 text-white">
       {/* Navigation */}

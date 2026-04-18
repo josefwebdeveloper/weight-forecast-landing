@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { blogArticles } from './blogData';
 import { Banana, ArrowLeft, Clock, Tag, ArrowRight } from 'lucide-react';
+import { usePageMeta } from '../usePageMeta';
 
 const APP_URL = 'https://weight-forecast.com';
+const SITE_URL = 'https://www.weight-forecast.com';
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -13,20 +15,19 @@ const BlogPost: React.FC = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  // Update document title for SEO
-  useEffect(() => {
-    if (article) {
-      document.title = `${article.title} — Weight Forecast Blog`;
-      // Update meta description
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', article.metaDescription);
-      }
-    }
-    return () => {
-      document.title = 'Weight Forecast — AI Predicts EXACTLY When You\'ll Hit Your Goal Weight (Free)';
-    };
-  }, [article]);
+  // Per-article meta — title/description/canonical/OG all point at this post.
+  // When article is missing we still render Navigate below, so keep the hook
+  // call unconditional by feeding safe fallbacks.
+  usePageMeta({
+    title: article
+      ? `${article.title} — Weight Forecast Blog`
+      : 'Weight Forecast Blog',
+    description: article?.metaDescription,
+    canonical: article ? `${SITE_URL}/blog/${article.slug}` : `${SITE_URL}/blog`,
+    ogType: article ? 'article' : 'website',
+    articlePublishedTime: article?.date,
+    articleSection: article?.category,
+  });
 
   if (!article) {
     return <Navigate to="/blog" replace />;

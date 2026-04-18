@@ -16,6 +16,7 @@ import {
   Shield,
   ArrowRight,
 } from 'lucide-react';
+import { usePageMeta } from './usePageMeta';
 
 const APP_URL = 'https://weight-forecast.com';
 
@@ -124,6 +125,13 @@ const whenMacroFactor = [
 ];
 
 const VsMacroFactor: React.FC = () => {
+  usePageMeta({
+    title: 'Weight Forecast vs MacroFactor — AI Coaching, Voice Logging, Forecasts',
+    description: 'Head-to-head comparison: Weight Forecast (free, AI coach, voice meal logging, goal-date forecast) vs MacroFactor ($11.99/mo, no AI coach, no voice). See the full feature table.',
+    canonical: 'https://www.weight-forecast.com/vs/macrofactor',
+    keywords: 'weight forecast vs macrofactor, macrofactor alternative, free macrofactor alternative, ai calorie tracker',
+  });
+
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans overflow-x-hidden">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between border-b border-slate-800">

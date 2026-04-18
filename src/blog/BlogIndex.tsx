@@ -2,10 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { blogArticles } from './blogData';
 import { Banana, ArrowRight, Clock, Tag, BookOpen } from 'lucide-react';
+import { usePageMeta } from '../usePageMeta';
 
 const APP_URL = 'https://weight-forecast.com';
 
 const BlogIndex: React.FC = () => {
+  usePageMeta({
+    title: 'Blog — Weight Forecast',
+    description: 'Practical articles on AI weight prediction, voice meal logging, plateau-breaking, and fitness coaching — from the Weight Forecast team.',
+    canonical: 'https://www.weight-forecast.com/blog',
+  });
+
   return (
     <div className="min-h-screen bg-slate-950 text-white font-sans">
       {/* Navigation */}
