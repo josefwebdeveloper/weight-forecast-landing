@@ -21,7 +21,7 @@ import {
   MessageCircle,
   Video
 } from 'lucide-react';
-import GoalDateCalculator from './GoalDateCalculator';
+import InteractiveDemo from './InteractiveDemo';
 import CaseStudies from './CaseStudies';
 import TelegramCoach from './TelegramCoach';
 import { Link } from 'react-router-dom';
@@ -305,7 +305,7 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            <GoalDateCalculator />
+            <InteractiveDemo />
           </div>
         </div>
 
