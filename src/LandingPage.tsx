@@ -275,11 +275,20 @@ const LandingPage: React.FC = () => {
                 Let Us Help You (FREE)
               </a>
               <a
+                href={`${APP_URL}?demo=1`}
+                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Try Demo' })}
+                className="px-8 py-4 glass border border-amber-500/40 hover:border-amber-400 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 hover:bg-amber-500/10 text-amber-300"
+              >
+                Try Live Demo — no signup
+              </a>
+            </div>
+            <div className="flex justify-center mb-8">
+              <a
                 href="#how-it-works"
                 onClick={() => trackEvent('navigation_click', { destination: 'how_it_works' })}
-                className="px-8 py-4 glass border border-slate-700 hover:border-slate-600 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 hover:bg-slate-800/50"
+                className="text-sm text-slate-400 hover:text-white transition-colors underline underline-offset-4 decoration-slate-700 hover:decoration-slate-500"
               >
-                See How It Works
+                See how it works ↓
               </a>
             </div>
 
