@@ -182,6 +182,26 @@ async function processInBatches(items, batchSize, fn) {
 }
 
 async function main() {
+  // Vercel (and some other CI images) do not ship NSS/Chromium shared libs that
+  // Puppeteer's downloaded Chrome needs — e.g. libnspr4.so — so launch fails
+  // with Code 127. Head/meta prerender from prerender.mjs still runs in `npm
+  // run build`; this step only bakes hydrated #root HTML for non-JS crawlers.
+  // Locally: full `npm run build` still runs snapshots. To force skip anywhere:
+  // SKIP_SNAPSHOT=1. To try snapshots on Vercel anyway (custom image with deps):
+  // SNAPSHOT_FORCE=1
+  if (process.env.SKIP_SNAPSHOT === '1') {
+    console.log('[snapshot] skipped: SKIP_SNAPSHOT=1');
+    process.exit(0);
+  }
+  if (process.env.VERCEL === '1' && process.env.SNAPSHOT_FORCE !== '1') {
+    console.log(
+      '[snapshot] skipped on Vercel (Chromium system libs unavailable in build image). ' +
+        'Deploy still includes prerendered head + route HTML shells. ' +
+        'For full body snapshots, run `npm run build` locally or `npm run snapshot` after `npm run build:fast`.'
+    );
+    process.exit(0);
+  }
+
   const blogRoutes = await loadBlogRoutes();
   const routes = [...STATIC_ROUTES, ...blogRoutes];
 
