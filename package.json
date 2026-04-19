@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/snapshot.mjs",
+    "build:fast": "vite build && node scripts/prerender.mjs",
+    "snapshot": "node scripts/snapshot.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -21,6 +23,8 @@
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "puppeteer": "^24.41.0",
+    "sirv": "^3.0.2",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
