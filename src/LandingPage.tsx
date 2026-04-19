@@ -24,6 +24,7 @@ import {
 import InteractiveDemo from './InteractiveDemo';
 import CaseStudies from './CaseStudies';
 import TelegramCoach from './TelegramCoach';
+import FunFactsShow from './FunFactsShow';
 import { Link } from 'react-router-dom';
 
 // TypeScript declaration for gtag
@@ -380,6 +381,34 @@ const LandingPage: React.FC = () => {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Fun Facts animated showcase — 50s cinematic loop of insights the app surfaces */}
+      <section className="py-20 sm:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent" />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
+              <Sparkles size={16} />
+              Hidden In Your Data
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
+              The <span className="text-amber-400">fun facts</span> hiding
+              <br className="hidden sm:block" />
+              in a weight tracker
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              Four screens. Thirteen insights. One very tired spreadsheet. Every number tells a story — we just highlight them.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div className="absolute -inset-2 bg-gradient-to-r from-amber-500/40 via-emerald-500/30 to-rose-500/40 rounded-3xl blur-2xl opacity-30 pointer-events-none" />
+            <div className="relative">
+              <FunFactsShow />
             </div>
           </div>
         </div>
