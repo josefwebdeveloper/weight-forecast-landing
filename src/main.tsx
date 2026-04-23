@@ -11,7 +11,9 @@ import { registerWebMCPTools } from './webmcp';
 
 registerWebMCPTools();
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root')!;
+
+const tree = (
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
@@ -25,3 +27,18 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// When the HTML was produced by `scripts/snapshot.mjs`, the document root has
+// `data-prerendered="true"` and `#root` already contains the fully rendered
+// tree for the current route. Hydrating over that snapshot preserves the LCP
+// paint and avoids a flash of blank content for real users on slow networks —
+// crucial because Googlebot's first-pass indexer does not execute JS, and
+// social scrapers (Twitter/Slack/Discord/LinkedIn) don't execute JS at all.
+//
+// For the dev server (`vite dev`) there is no prerendered body, so we fall
+// back to a normal `createRoot().render()`.
+if (document.documentElement.getAttribute('data-prerendered') === 'true') {
+  ReactDOM.hydrateRoot(rootEl, tree);
+} else {
+  ReactDOM.createRoot(rootEl).render(tree);
+}

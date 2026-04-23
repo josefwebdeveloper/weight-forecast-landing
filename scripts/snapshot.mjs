@@ -11,16 +11,21 @@
  * What this does: after `vite build` + `prerender.mjs`, spin up a static
  * server against `dist/`, drive headless Chromium through every canonical
  * route, wait for React to hydrate, and bake the resulting `#root` innerHTML
- * back into the matching `dist/<route>/index.html`. React still hydrates on
- * top of the snapshot at runtime, so behaviour is unchanged — the snapshot
- * only gives non-JS clients a real first paint.
+ * back into the matching `dist/<route>/index.html`. The `<html>` tag is
+ * tagged with `data-prerendered="true"` so `src/main.tsx` picks
+ * `ReactDOM.hydrateRoot` instead of `createRoot` at runtime — that way real
+ * users see the snapshot immediately (great LCP), and hydration attaches
+ * interactivity on top of the existing DOM without blowing it away.
+ *
+ * Runs in production (including Vercel) via `@sparticuz/chromium`, which
+ * ships a Chromium build compatible with the serverless image. Locally we
+ * use the regular `puppeteer` binary.
  *
  * Trade-offs:
- *   - Adds ~170MB Chromium download to devDeps (build-time only).
+ *   - Adds ~50MB @sparticuz/chromium download to devDeps (build-time only).
  *   - Adds ~30-60s to the build.
  *   - Requires that components handle hydration cleanly (no pure-random IDs,
- *     no Date.now() in render, etc.). React 19 is tolerant of minor
- *     mismatches.
+ *     no Date.now() in render, etc.). Wrap dynamic subtrees in <ClientOnly>.
  */
 
 import { promises as fs } from 'node:fs';
@@ -29,6 +34,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sirv from 'sirv';
 import puppeteer from 'puppeteer';
+import puppeteerCore from 'puppeteer-core';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -167,8 +173,51 @@ async function patchRouteFile(route, rootHtml) {
     `<div id="root">${rootHtml}</div>` +
     html.slice(closeIdx + '</div>'.length);
 
+  // Mark the document so `src/main.tsx` picks hydrateRoot over createRoot.
+  // Idempotent: if the attribute is already there, we leave it alone;
+  // otherwise inject it into the `<html ...>` open tag.
+  if (!/<html[^>]*\sdata-prerendered=/i.test(html)) {
+    html = html.replace(/<html\b([^>]*)>/i, '<html$1 data-prerendered="true">');
+  }
+
   await fs.writeFile(file, html, 'utf8');
   return file;
+}
+
+/**
+ * Pick the right Puppeteer flavour for the environment.
+ *
+ * On Vercel (and other serverless CI images) the default Puppeteer Chromium
+ * fails to launch because the build image is missing shared libs like
+ * libnspr4.so. `@sparticuz/chromium` ships a prebuilt Chromium compatible
+ * with those images and pairs with `puppeteer-core`. Locally we keep using
+ * the regular `puppeteer` binary for zero-config DX.
+ */
+async function launchBrowser() {
+  const isCI = !!(
+    process.env.CI ||
+    process.env.VERCEL ||
+    process.env.AWS_LAMBDA_FUNCTION_NAME
+  );
+  if (isCI) {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    chromium.setHeadlessMode = true;
+    chromium.setGraphicsMode = false;
+    return puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+  }
+  return puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+    ],
+  });
 }
 
 async function processInBatches(items, batchSize, fn) {
@@ -182,23 +231,9 @@ async function processInBatches(items, batchSize, fn) {
 }
 
 async function main() {
-  // Vercel (and some other CI images) do not ship NSS/Chromium shared libs that
-  // Puppeteer's downloaded Chrome needs — e.g. libnspr4.so — so launch fails
-  // with Code 127. Head/meta prerender from prerender.mjs still runs in `npm
-  // run build`; this step only bakes hydrated #root HTML for non-JS crawlers.
-  // Locally: full `npm run build` still runs snapshots. To force skip anywhere:
-  // SKIP_SNAPSHOT=1. To try snapshots on Vercel anyway (custom image with deps):
-  // SNAPSHOT_FORCE=1
+  // Escape hatch for local experimentation / emergency deploys.
   if (process.env.SKIP_SNAPSHOT === '1') {
     console.log('[snapshot] skipped: SKIP_SNAPSHOT=1');
-    process.exit(0);
-  }
-  if (process.env.VERCEL === '1' && process.env.SNAPSHOT_FORCE !== '1') {
-    console.log(
-      '[snapshot] skipped on Vercel (Chromium system libs unavailable in build image). ' +
-        'Deploy still includes prerendered head + route HTML shells. ' +
-        'For full body snapshots, run `npm run build` locally or `npm run snapshot` after `npm run build:fast`.'
-    );
     process.exit(0);
   }
 
@@ -209,14 +244,7 @@ async function main() {
   const server = await startServer();
 
   console.log('[snapshot] launching chromium');
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-    ],
-  });
+  const browser = await launchBrowser();
 
   let failures = 0;
   try {

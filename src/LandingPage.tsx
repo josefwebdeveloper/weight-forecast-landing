@@ -25,6 +25,7 @@ import InteractiveDemo from './InteractiveDemo';
 import CaseStudies from './CaseStudies';
 import TelegramCoach from './TelegramCoach';
 import FunFactsShow from './FunFactsShow';
+import ClientOnly from './ClientOnly';
 import { Link } from 'react-router-dom';
 
 // TypeScript declaration for gtag
@@ -315,7 +316,16 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            <InteractiveDemo />
+            <ClientOnly
+              fallback={
+                <div
+                  aria-hidden="true"
+                  className="mt-8 sm:mt-12 h-[420px] sm:h-[520px] rounded-3xl border border-slate-800/60 bg-slate-900/40 animate-pulse"
+                />
+              }
+            >
+              <InteractiveDemo />
+            </ClientOnly>
           </div>
         </div>
 
@@ -408,7 +418,16 @@ const LandingPage: React.FC = () => {
           <div className="relative">
             <div className="absolute -inset-2 bg-gradient-to-r from-amber-500/40 via-emerald-500/30 to-rose-500/40 rounded-3xl blur-2xl opacity-30 pointer-events-none" />
             <div className="relative">
-              <FunFactsShow />
+              <ClientOnly
+                fallback={
+                  <div
+                    aria-hidden="true"
+                    className="h-[520px] rounded-3xl border border-slate-800/60 bg-slate-900/40 animate-pulse"
+                  />
+                }
+              >
+                <FunFactsShow />
+              </ClientOnly>
             </div>
           </div>
         </div>
