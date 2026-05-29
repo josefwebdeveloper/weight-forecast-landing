@@ -72,6 +72,56 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     
+    <!-- JSON-LD: WebSite (primary sitelinks signal) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Weight Forecast",
+      "alternateName": "AI Weight Prediction App",
+      "url": "https://www.weight-forecast.com/",
+      "description": "AI-powered weight prediction tells you the exact date you'll hit your goal weight. Free forever.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Weight Forecast",
+        "url": "https://www.weight-forecast.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.weight-forecast.com/apple-touch-icon.png"
+        }
+      }
+    }
+    </script>
+
+    <!-- JSON-LD: SiteNavigationElement (tells Google which pages are important nav items) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Blog",
+          "url": "https://www.weight-forecast.com/blog"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Weight Forecast vs MacroFactor",
+          "url": "https://www.weight-forecast.com/vs/macrofactor"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Privacy Policy",
+          "url": "https://www.weight-forecast.com/privacy"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "name": "Terms of Service",
+          "url": "https://www.weight-forecast.com/terms"
+        }
+      ]
+    }
+    </script>
+
     <!-- JSON-LD: WebApplication -->
     <script type="application/ld+json">
     {

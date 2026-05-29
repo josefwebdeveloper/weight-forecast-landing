@@ -231,9 +231,9 @@ const LandingPage: React.FC = () => {
             <a href="#faq" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
               FAQ
             </a>
-            <a href="/blog" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
+            <Link to="/blog" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
               Blog
-            </a>
+            </Link>
             <a
               href={APP_URL}
               onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Launch App' })}
@@ -667,9 +667,9 @@ const LandingPage: React.FC = () => {
               <a href="#stories" className="hover:text-white transition-colors">Stories</a>
               <Link to="/vs/macrofactor" className="hover:text-white transition-colors">vs MacroFactor</Link>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
-              <a href="/blog" className="hover:text-white transition-colors">Blog</a>
-              <a href="/privacy" className="hover:text-white transition-colors">Privacy</a>
-              <a href="/terms" className="hover:text-white transition-colors">Terms</a>
+              <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
+              <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+              <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
               <a href="mailto:working.projects.info@gmail.com" className="hover:text-white transition-colors">Contact</a>
             </div>
           </div>
