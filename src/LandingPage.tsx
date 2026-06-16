@@ -26,6 +26,7 @@ import CaseStudies from './CaseStudies';
 import TelegramCoach from './TelegramCoach';
 import FunFactsShow from './FunFactsShow';
 import ClientOnly from './ClientOnly';
+import IntegrationBadges from './IntegrationBadges';
 import { Link } from 'react-router-dom';
 
 // TypeScript declaration for gtag
@@ -236,10 +237,10 @@ const LandingPage: React.FC = () => {
             </Link>
             <a
               href={APP_URL}
-              onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Launch App' })}
+              onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Start free' })}
               className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/25 text-slate-950 text-sm"
             >
-              Launch App
+              Start free
             </a>
           </div>
         </nav>
@@ -247,54 +248,41 @@ const LandingPage: React.FC = () => {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-20 sm:pt-20 sm:pb-32">
           <div className="text-center max-w-4xl mx-auto">
-            {/* Social Proof Badge removed */}
-
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">
-              We <span className="underline decoration-amber-500 decoration-4">will help</span> you!
-            </h1>
-
-            <div className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-medium space-y-4">
-              <p className="flex items-center justify-center gap-3">
-                 <CheckCircle2 className="text-amber-400 shadow-amber-400 shadow-sm rounded-full" size={24} />
-                 <span>We will help you <span className="text-white font-bold">get lean and burn fat</span></span>
-              </p>
-              <p className="flex items-center justify-center gap-3">
-                 <CheckCircle2 className="text-amber-400 shadow-amber-400 shadow-sm rounded-full" size={24} />
-                 <span>We will help you <span className="text-white font-bold">complete your daily habits effortlessly</span></span>
-              </p>
-              <p className="flex items-center justify-center gap-3">
-                 <CheckCircle2 className="text-amber-400 shadow-amber-400 shadow-sm rounded-full" size={24} />
-                 <span>We will help you <span className="text-white font-bold">hit your goal weight exactly on time</span></span>
-              </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
+              <Target size={16} />
+              For athletes &amp; data geeks
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] mb-5 tracking-tight text-balance">
+              Smart predictive weight analyzer
+            </h1>
+
+            <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed">
+              Know the <span className="text-white font-semibold">exact date</span> you&apos;ll hit your target weight —
+              powered by your <span className="text-white font-semibold">Garmin</span>,{' '}
+              <span className="text-white font-semibold">Strava</span> &amp;{' '}
+              <span className="text-white font-semibold">Telegram</span> data.
+            </p>
+
+            <IntegrationBadges />
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6">
               <a
                 href={APP_URL}
-                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Let Us Help You' })}
-                className="group px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 flex items-center justify-center gap-2"
+                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Start free with Google' })}
+                className="group px-10 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/40 hover:scale-[1.03] flex items-center justify-center gap-2 min-w-[260px]"
               >
-                Let Us Help You (FREE)
+                Start free with Google
               </a>
               <a
                 href={`${APP_URL}?demo=1`}
                 onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Try Demo' })}
-                className="px-8 py-4 glass border border-amber-500/40 hover:border-amber-400 rounded-xl font-semibold text-lg transition-all flex items-center justify-center gap-2 hover:bg-amber-500/10 text-amber-300"
+                className="px-8 py-4 glass border border-slate-600 hover:border-amber-400/50 rounded-xl font-medium text-base transition-all flex items-center justify-center gap-2 hover:bg-white/5 text-slate-300"
               >
-                Try Live Demo — no signup
+                Try live demo — no signup
               </a>
             </div>
-            <div className="flex justify-center mb-8">
-              <a
-                href="#how-it-works"
-                onClick={() => trackEvent('navigation_click', { destination: 'how_it_works' })}
-                className="text-sm text-slate-400 hover:text-white transition-colors underline underline-offset-4 decoration-slate-700 hover:decoration-slate-500"
-              >
-                See how it works ↓
-              </a>
-            </div>
-
-            {/* Urgency Element removed */}
+            <p className="text-sm text-slate-500 mb-8">Free forever · No credit card · 1-click Google sign-in</p>
 
             {/* Trust Badges */}
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-slate-500 text-sm">
