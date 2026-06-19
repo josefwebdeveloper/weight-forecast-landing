@@ -34,9 +34,9 @@
     <meta name="apple-mobile-web-app-title" content="Weight Forecast" />
     
     <!-- Theme Color -->
-    <meta name="theme-color" content="#0F172A" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#F59E0B" media="(prefers-color-scheme: light)" />
-    <meta name="msapplication-TileColor" content="#0F172A" />
+    <meta name="theme-color" content="#0B0B0D" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#2D5BFF" media="(prefers-color-scheme: light)" />
+    <meta name="msapplication-TileColor" content="#0B0B0D" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -69,8 +69,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="dns-prefetch" href="https://weight-forecast.com" />
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Fonts — Paddle design system -->
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     
     <!-- JSON-LD: WebSite (primary sitelinks signal) -->
     <script type="application/ld+json">
@@ -215,7 +215,32 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+              sans: ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+              mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+            },
+            colors: {
+              ink: {
+                950: '#08080A',
+                900: '#0B0B0D',
+                800: '#16161A',
+                700: '#26262C',
+                600: '#3A3A42',
+                500: '#5C5C66',
+                400: '#8A8A94',
+                300: '#B8B8C0',
+                200: '#D9D9DE',
+                100: '#ECECEF',
+                50: '#F4F4F6',
+              },
+              accent: {
+                DEFAULT: '#2D5BFF',
+                hover: '#2347E6',
+                soft: '#E4EAFF',
+              },
+              bone: {
+                DEFAULT: '#F4F1EA',
+                deep: '#ECE7DC',
+              },
             },
           },
         },
@@ -223,43 +248,10 @@
     </script>
     <style>
       body {
-        background-color: #0F172A;
-        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-      }
-      
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-      }
-      
-      @keyframes pulse-glow {
-        0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
-        50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.5); }
-      }
-      
-      @keyframes gradient-shift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-      
-      .animate-float {
-        animation: float 3s ease-in-out infinite;
-      }
-      
-      .animate-pulse-glow {
-        animation: pulse-glow 2s ease-in-out infinite;
-      }
-      
-      .animate-gradient {
-        background-size: 200% 200%;
-        animation: gradient-shift 3s ease infinite;
-      }
-      
-      .glass {
-        background: rgba(15, 23, 42, 0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background-color: #FFFFFF;
+        font-family: 'Hanken Grotesk', system-ui, sans-serif;
+        color: #26262C;
+        -webkit-font-smoothing: antialiased;
       }
     </style>
   </head>

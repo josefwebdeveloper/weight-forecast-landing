@@ -31,7 +31,7 @@ interface ScenarioDef {
 
 const SCENARIOS: ScenarioDef[] = [
   { key: 'moderate', label: 'Easier pace', deficitDelta: -150, tone: 'emerald' },
-  { key: 'current', label: 'Your pace', deficitDelta: 0, tone: 'amber' },
+  { key: 'current', label: 'Your pace', deficitDelta: 0, tone: 'blue' },
   { key: 'aggressive', label: 'Push harder', deficitDelta: +200, tone: 'rose' },
 ];
 
@@ -148,8 +148,17 @@ const InteractiveDemo: React.FC = () => {
 
   if (!forecast) {
     return (
-      <div className="mt-12 max-w-5xl mx-auto">
-        <div className="rounded-3xl border border-amber-500/30 bg-slate-900/80 p-8 text-center text-slate-400">
+      <div style={{ marginTop: 0 }}>
+        <div
+          style={{
+            borderRadius: 'var(--radius-xl)',
+            border: '1px solid var(--border-default)',
+            background: 'var(--paper)',
+            padding: 32,
+            textAlign: 'center',
+            color: 'var(--text-muted)',
+          }}
+        >
           Target weight must be lower than current weight.
         </div>
       </div>
@@ -162,20 +171,54 @@ const InteractiveDemo: React.FC = () => {
   ];
 
   return (
-    <div className="relative mt-12 max-w-5xl mx-auto">
-      <div className="absolute -inset-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl blur opacity-20 pointer-events-none" />
-      <div className="relative glass border border-amber-500/30 rounded-3xl p-6 sm:p-8 bg-slate-900/80 backdrop-blur-md text-left">
-        <div className="flex flex-wrap items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center shrink-0">
-            <Sparkles className="text-amber-400" size={20} />
+    <div style={{ position: 'relative', textAlign: 'left' }}>
+      <div
+        style={{
+          position: 'relative',
+          borderRadius: 'var(--radius-xl)',
+          border: '1px solid var(--border-default)',
+          background: 'var(--paper)',
+          boxShadow: 'var(--shadow-xl)',
+          padding: '24px 28px',
+          color: 'var(--text-body)',
+        }}
+      >
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 'var(--radius-md)',
+              background: 'var(--blue-100)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}
+          >
+            <Sparkles color="var(--accent)" size={20} />
           </div>
-          <div className="flex-1 min-w-[200px]">
-            <div className="text-xs uppercase tracking-widest text-amber-400 font-bold">
+          <div style={{ flex: 1, minWidth: 200 }}>
+            <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: 'var(--tracking-overline)', color: 'var(--accent)', fontWeight: 600 }}>
               Live forecast preview — no signup
             </div>
-            <div className="text-lg sm:text-xl font-bold">Play with your weight prediction</div>
+            <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-strong)', letterSpacing: 'var(--tracking-snug)' }}>
+              Play with your weight prediction
+            </div>
           </div>
-          <span className="text-[10px] uppercase tracking-widest px-2 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400">
+          <span
+            style={{
+              fontSize: 10,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              padding: '4px 10px',
+              borderRadius: 'var(--radius-pill)',
+              background: 'var(--ink-50)',
+              border: '1px solid var(--border-subtle)',
+              color: 'var(--text-subtle)',
+              fontWeight: 600,
+            }}
+          >
             demo
           </span>
         </div>
@@ -232,35 +275,43 @@ const InteractiveDemo: React.FC = () => {
                 setScenario(s.key);
                 handleInteraction('scenario_' + s.key);
               }}
-              className={`flex-1 min-w-[120px] rounded-lg border px-3 py-2 text-xs font-semibold transition ${
-                scenario === s.key
-                  ? `bg-${s.tone}-500/15 border-${s.tone}-400 text-${s.tone}-200`
-                  : 'bg-slate-800/40 border-slate-700 text-slate-400 hover:border-slate-500'
-              }`}
-              style={
-                scenario === s.key
+              style={{
+                flex: '1 1 120px',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid',
+                padding: '8px 12px',
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: 'pointer',
+                fontFamily: 'var(--font-sans)',
+                transition: 'border-color 0.15s ease, background 0.15s ease',
+                ...(scenario === s.key
                   ? {
                       backgroundColor:
-                        s.tone === 'amber'
-                          ? 'rgba(245,158,11,0.15)'
+                        s.tone === 'blue'
+                          ? 'var(--blue-100)'
                           : s.tone === 'emerald'
-                            ? 'rgba(16,185,129,0.15)'
-                            : 'rgba(244,63,94,0.15)',
+                            ? 'var(--green-100)'
+                            : 'var(--coral-100)',
                       borderColor:
-                        s.tone === 'amber'
-                          ? 'rgb(251,191,36)'
+                        s.tone === 'blue'
+                          ? 'var(--blue-400)'
                           : s.tone === 'emerald'
-                            ? 'rgb(52,211,153)'
-                            : 'rgb(251,113,133)',
+                            ? 'var(--green-500)'
+                            : 'var(--coral-500)',
                       color:
-                        s.tone === 'amber'
-                          ? 'rgb(253,230,138)'
+                        s.tone === 'blue'
+                          ? 'var(--blue-700)'
                           : s.tone === 'emerald'
-                            ? 'rgb(167,243,208)'
-                            : 'rgb(254,205,211)',
+                            ? 'var(--success-fg)'
+                            : 'var(--danger-fg)',
                     }
-                  : undefined
-              }
+                  : {
+                      backgroundColor: 'var(--ink-50)',
+                      borderColor: 'var(--border-subtle)',
+                      color: 'var(--text-muted)',
+                    }),
+              }}
             >
               <div>{s.label}</div>
               <div className="text-[10px] opacity-70 font-normal mt-0.5">
@@ -273,38 +324,39 @@ const InteractiveDemo: React.FC = () => {
         </div>
 
         {/* Chart */}
-        <div className="rounded-2xl border border-slate-700 bg-slate-950/50 p-3 sm:p-4 mb-5">
+        <div style={{ borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-subtle)', background: 'var(--ink-50)', padding: '12px 16px', marginBottom: 20 }}>
           <ResponsiveContainer width="100%" height={280}>
             <ComposedChart data={forecast.points} margin={{ top: 10, right: 16, left: -10, bottom: 0 }}>
               <defs>
                 <linearGradient id="confidenceBand" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.25} />
-                  <stop offset="100%" stopColor="#f59e0b" stopOpacity={0.03} />
+                  <stop offset="0%" stopColor="#2D5BFF" stopOpacity={0.2} />
+                  <stop offset="100%" stopColor="#2D5BFF" stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(148,163,184,0.1)" strokeDasharray="3 3" vertical={false} />
+              <CartesianGrid stroke="rgba(92,92,102,0.15)" strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="day"
                 type="number"
                 domain={[-56, 'dataMax']}
                 ticks={[-56, -28, 0, 28, 56, 84, 112]}
                 tickFormatter={(d) => (d === 0 ? 'Today' : formatDate(d))}
-                stroke="rgba(148,163,184,0.5)"
+                stroke="rgba(92,92,102,0.5)"
                 tick={{ fontSize: 11 }}
               />
               <YAxis
                 domain={yDomain}
-                stroke="rgba(148,163,184,0.5)"
+                stroke="rgba(92,92,102,0.5)"
                 tick={{ fontSize: 11 }}
                 tickFormatter={(v) => `${v}`}
                 width={45}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'rgba(15,23,42,0.95)',
-                  border: '1px solid rgba(245,158,11,0.4)',
+                  backgroundColor: '#fff',
+                  border: '1px solid var(--border-default)',
                   borderRadius: 8,
                   fontSize: 12,
+                  boxShadow: 'var(--shadow-md)',
                 }}
                 labelFormatter={(day) => (day === 0 ? 'Today' : `${day > 0 ? 'In ' : ''}${Math.abs(day)} days ${day < 0 ? 'ago' : ''}`)}
                 formatter={(value, key) => {
@@ -316,12 +368,12 @@ const InteractiveDemo: React.FC = () => {
               />
               <ReferenceLine
                 y={targetWeight}
-                stroke="#10b981"
+                stroke="#00B877"
                 strokeDasharray="4 4"
                 label={{
                   value: `Goal: ${targetWeight} kg`,
                   position: 'insideTopRight',
-                  fill: '#34d399',
+                  fill: '#047857',
                   fontSize: 11,
                   fontWeight: 600,
                 }}
@@ -338,13 +390,13 @@ const InteractiveDemo: React.FC = () => {
                 type="monotone"
                 dataKey="lo"
                 stroke="none"
-                fill="#0f172a"
+                fill="#F4F4F6"
                 isAnimationActive={false}
               />
               <Line
                 type="monotone"
                 dataKey="actual"
-                stroke="#94a3b8"
+                stroke="#8A8A94"
                 strokeWidth={2}
                 dot={false}
                 connectNulls
@@ -353,7 +405,7 @@ const InteractiveDemo: React.FC = () => {
               <Line
                 type="monotone"
                 dataKey="projection"
-                stroke="#f59e0b"
+                stroke="#2D5BFF"
                 strokeWidth={2.5}
                 strokeDasharray="6 4"
                 dot={false}
@@ -362,35 +414,40 @@ const InteractiveDemo: React.FC = () => {
               />
             </ComposedChart>
           </ResponsiveContainer>
-          <div className="flex flex-wrap gap-4 pt-2 pl-2 text-[11px] text-slate-400">
-            <LegendDot color="#94a3b8" label="Your history (simulated)" />
-            <LegendDot color="#f59e0b" label="AI forecast" dashed />
-            <LegendDot color="#10b981" label="Goal" dashed />
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, paddingTop: 8, paddingLeft: 8, fontSize: 11, color: 'var(--text-muted)' }}>
+            <LegendDot color="#8A8A94" label="Your history (simulated)" />
+            <LegendDot color="#2D5BFF" label="AI forecast" dashed />
+            <LegendDot color="#00B877" label="Goal" dashed />
           </div>
         </div>
 
-        {/* Result + CTA */}
-        <div className="grid md:grid-cols-[1.3fr,1fr] gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
           <div
-            className={`rounded-2xl p-5 border ${
-              forecast.isHealthy
-                ? 'border-emerald-500/30 bg-emerald-500/5'
-                : 'border-amber-500/40 bg-amber-500/10'
-            }`}
+            style={{
+              borderRadius: 'var(--radius-lg)',
+              padding: 20,
+              border: forecast.isHealthy ? '1px solid var(--green-500)' : '1px solid var(--gold-500)',
+              background: forecast.isHealthy ? 'var(--green-100)' : 'var(--gold-100)',
+            }}
           >
-            <div className="text-xs uppercase tracking-wider text-slate-400 font-bold mb-1">
+            <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', fontWeight: 600, marginBottom: 4 }}>
               Projected goal date
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-white mb-1 leading-tight">
+            <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-strong)', marginBottom: 4, lineHeight: 1.1, letterSpacing: '-0.02em' }}>
               {forecast.goalDateLabel}
             </div>
-            <div className="text-sm text-slate-300 mb-3">
+            <div style={{ fontSize: 14, color: 'var(--text-body)', marginBottom: 12 }}>
               {forecast.daysToGoal} days from today · {forecast.weeks} weeks · {forecast.weeklyLoss.toFixed(2)} kg/week
             </div>
             <div
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold ${
-                forecast.isHealthy ? 'text-emerald-300' : 'text-amber-300'
-              }`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6,
+                fontSize: 12,
+                fontWeight: 600,
+                color: forecast.isHealthy ? 'var(--success-fg)' : 'var(--warning-fg)',
+              }}
             >
               {forecast.isHealthy ? <Check size={14} /> : <AlertTriangle size={14} />}
               {forecast.isHealthy
@@ -410,26 +467,40 @@ const InteractiveDemo: React.FC = () => {
                 scenario,
               })
             }
-            className="group rounded-2xl p-5 bg-gradient-to-br from-amber-500 to-orange-500 text-slate-950 font-bold flex flex-col justify-between hover:shadow-lg hover:shadow-amber-500/30 transition-all"
+            style={{
+              borderRadius: 'var(--radius-lg)',
+              padding: 20,
+              background: 'var(--accent)',
+              color: '#fff',
+              fontWeight: 600,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              textDecoration: 'none',
+              transition: 'transform 0.12s ease, box-shadow 0.15s ease',
+              boxShadow: 'var(--shadow-md)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = 'var(--shadow-lg)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }}
           >
             <div>
-              <div className="flex items-center gap-1.5 text-xs uppercase tracking-wider opacity-80 font-bold mb-1">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.85, fontWeight: 600, marginBottom: 4 }}>
                 <Zap size={14} /> Next step
               </div>
-              <div className="text-lg leading-tight">
-                Save with <span className="underline decoration-2 underline-offset-2">your</span> real data
+              <div style={{ fontSize: 18, lineHeight: 1.25 }}>
+                Save with <span style={{ textDecoration: 'underline', textUnderlineOffset: 3 }}>your</span> real data
               </div>
-              <div className="text-xs font-medium opacity-80 mt-1.5">
+              <div style={{ fontSize: 12, opacity: 0.85, marginTop: 6 }}>
                 1-click Google sign-in · free forever on basic tracking.
               </div>
             </div>
-            <div className="mt-4 inline-flex items-center gap-1.5 text-sm">
-              Start tracking <ArrowRight size={16} className="group-hover:translate-x-0.5 transition" />
+            <div style={{ marginTop: 16, display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 14 }}>
+              Start tracking <ArrowRight size={16} />
             </div>
           </a>
         </div>
 
-        <p className="text-xs text-slate-500 mt-5 leading-relaxed">
+        <p style={{ fontSize: 12, color: 'var(--text-subtle)', marginTop: 20, lineHeight: 1.6 }}>
           The dashed forecast is what the app actually generates — linear regression on your real
           morning weights, with a confidence band that shrinks as you log more days. After 2 weeks
           of tracking, prediction accuracy is typically ±0.5 kg.
@@ -450,15 +521,15 @@ const SliderInput: React.FC<{
   icon?: React.ReactNode;
 }> = ({ label, unit, value, min, max, step, onChange, icon }) => {
   return (
-    <label className="block">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-xs text-slate-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
+    <label style={{ display: 'block' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: 6 }}>
           {icon}
           {label}
         </span>
-        <span className="text-sm font-bold text-amber-300 tabular-nums">
+        <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--accent)', fontVariantNumeric: 'tabular-nums' }}>
           {value}
-          <span className="text-[10px] text-slate-500 font-medium ml-0.5">{unit}</span>
+          <span style={{ fontSize: 10, color: 'var(--text-subtle)', fontWeight: 500, marginLeft: 2 }}>{unit}</span>
         </span>
       </div>
       <input
@@ -468,9 +539,9 @@ const SliderInput: React.FC<{
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full h-2 accent-amber-500 cursor-pointer"
+        style={{ width: '100%', height: 8, accentColor: 'var(--accent)', cursor: 'pointer' }}
       />
-      <div className="flex justify-between text-[10px] text-slate-600 mt-1 font-mono">
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'var(--text-subtle)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>
         <span>{min}</span>
         <span>{max}</span>
       </div>

@@ -21,16 +21,40 @@ const badges = [
   },
 ];
 
-const IntegrationBadges: React.FC = () => (
-  <div className="flex flex-col items-center gap-3 mb-6 sm:mb-8">
-    <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+interface IntegrationBadgesProps {
+  dark?: boolean;
+}
+
+const IntegrationBadges: React.FC<IntegrationBadgesProps> = ({ dark = false }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, margin: '24px 0 8px' }}>
+    <p
+      style={{
+        fontSize: 12,
+        fontWeight: 600,
+        letterSpacing: 'var(--tracking-overline)',
+        textTransform: 'uppercase',
+        color: dark ? 'var(--text-on-dark-muted)' : 'var(--text-subtle)',
+        margin: 0,
+      }}
+    >
       Syncs with your stack
     </p>
-    <div className="flex items-end justify-center gap-5 sm:gap-8">
+    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 28 }}>
       {badges.map(({ name, src, imgClass, wrapClass }) => (
-        <div key={name} className="flex flex-col items-center gap-1.5">
+        <div key={name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
           <div
-            className={`flex h-12 w-12 items-center justify-center shadow-lg shadow-black/25 ring-1 ring-white/10 ${wrapClass}`}
+            className={wrapClass}
+            style={{
+              display: 'flex',
+              height: 48,
+              width: 48,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: 'var(--radius-md)',
+              border: dark ? '1px solid var(--border-inverse)' : '1px solid var(--border-default)',
+              background: dark ? 'rgba(255,255,255,0.06)' : 'var(--paper)',
+              boxShadow: dark ? 'none' : 'var(--shadow-sm)',
+            }}
           >
             <img
               src={src}
@@ -42,7 +66,15 @@ const IntegrationBadges: React.FC = () => (
               className={imgClass}
             />
           </div>
-          <span className="text-[11px] sm:text-xs font-medium text-slate-400">{name}</span>
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 500,
+              color: dark ? 'var(--text-on-dark-muted)' : 'var(--text-muted)',
+            }}
+          >
+            {name}
+          </span>
         </div>
       ))}
     </div>

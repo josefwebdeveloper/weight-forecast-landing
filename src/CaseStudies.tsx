@@ -1,5 +1,6 @@
 import React from 'react';
-import { Quote, TrendingDown, Calendar, Sparkles } from 'lucide-react';
+import { Quote, TrendingDown, Calendar } from 'lucide-react';
+import { Card } from './components/paddle';
 
 interface Story {
   name: string;
@@ -24,7 +25,7 @@ const stories: Story[] = [
       "The daily prediction is pure sorcery. Seeing 'goal: November 12' every morning turned dieting into a countdown instead of a chore.",
     highlight: '−14 kg in ~5 months',
     initial: 'A',
-    accent: 'from-amber-400 to-orange-500',
+    accent: 'var(--blue-500)',
   },
   {
     name: 'Maria K.',
@@ -36,7 +37,7 @@ const stories: Story[] = [
       'Voice logging in Russian + Telegram coach is the only reason I stuck with tracking for six months. Everything else felt like a second job.',
     highlight: '−12 kg, zero typing',
     initial: 'M',
-    accent: 'from-purple-400 to-pink-500',
+    accent: 'var(--lilac-500)',
   },
   {
     name: 'Dmitry S.',
@@ -48,92 +49,89 @@ const stories: Story[] = [
       'Garmin sync + plateau detection nailed me twice. Each time the app suggested a re-feed and weight started dropping again within a week.',
     highlight: '−16 kg, 2 plateaus broken',
     initial: 'D',
-    accent: 'from-emerald-400 to-teal-500',
+    accent: 'var(--green-500)',
   },
 ];
 
 const CaseStudies: React.FC = () => {
   return (
-    <section id="stories" className="py-20 sm:py-28 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-950/10 to-transparent pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-300 text-sm font-medium mb-6">
-            <Sparkles size={16} />
-            Real Results
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-            People who hit their date
-            <span className="text-amber-400"> ahead of schedule</span>
+    <section id="stories" className="pdl-bg-warm pdl-section">
+      <div className="pdl-container">
+        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+          <div className="pdl-overline" style={{ marginBottom: 16 }}>Real results</div>
+          <h2 className="pdl-h2" style={{ margin: '0 0 16px' }}>
+            People who hit their date ahead of schedule
           </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+          <p className="pdl-lead" style={{ maxWidth: 520, margin: '0 auto' }}>
             Not cherry-picked transformations — everyday users letting the AI do the heavy lifting.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
           {stories.map((s, i) => {
             const delta = s.before - s.after;
             const months = (s.days / 30).toFixed(1);
             return (
-              <article
-                key={i}
-                className="group glass border border-slate-700/60 rounded-2xl p-6 sm:p-8 hover:border-amber-500/40 hover:-translate-y-1 transition-all hover:shadow-2xl hover:shadow-black/20"
-              >
-                <div className="flex items-center gap-3 mb-5">
+              <Card key={i} interactive padding={28}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
                   <div
-                    className={`w-12 h-12 rounded-full bg-gradient-to-br ${s.accent} flex items-center justify-center text-slate-950 font-bold text-lg shadow-lg`}
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: '50%',
+                      background: s.accent,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontWeight: 700,
+                      fontSize: 16,
+                    }}
                   >
                     {s.initial}
                   </div>
                   <div>
-                    <div className="font-bold text-white">{s.name}</div>
-                    <div className="text-xs text-slate-500">{s.location}</div>
+                    <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--text-strong)' }}>{s.name}</div>
+                    <div style={{ fontSize: 12, color: 'var(--text-subtle)' }}>{s.location}</div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 mb-5 text-center">
-                  <div className="bg-slate-800/40 rounded-lg py-3">
-                    <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
-                      Before
-                    </div>
-                    <div className="text-lg font-bold text-slate-300">{s.before} kg</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 20 }}>
+                  <div style={{ background: 'var(--ink-50)', borderRadius: 'var(--radius-sm)', padding: '12px 8px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-subtle)', fontWeight: 600, marginBottom: 4 }}>Before</div>
+                    <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-body)' }}>{s.before} kg</div>
                   </div>
-                  <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg py-3">
-                    <div className="text-[10px] uppercase tracking-wider text-emerald-400 font-bold mb-1 flex items-center justify-center gap-1">
+                  <div style={{ background: 'var(--success-bg)', borderRadius: 'var(--radius-sm)', padding: '12px 8px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--success-fg)', fontWeight: 600, marginBottom: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
                       <TrendingDown size={10} /> Lost
                     </div>
-                    <div className="text-lg font-bold text-emerald-400">−{delta} kg</div>
+                    <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--success-fg)' }}>−{delta} kg</div>
                   </div>
-                  <div className="bg-slate-800/40 rounded-lg py-3">
-                    <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">
-                      After
-                    </div>
-                    <div className="text-lg font-bold text-white">{s.after} kg</div>
+                  <div style={{ background: 'var(--ink-50)', borderRadius: 'var(--radius-sm)', padding: '12px 8px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-subtle)', fontWeight: 600, marginBottom: 4 }}>After</div>
+                    <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--text-strong)' }}>{s.after} kg</div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-xs text-slate-500 mb-5">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--text-subtle)', marginBottom: 20 }}>
                   <Calendar size={12} />
                   <span>
-                    {months} months · <span className="text-amber-400 font-semibold">{s.highlight}</span>
+                    {months} months · <span style={{ color: 'var(--accent)', fontWeight: 600 }}>{s.highlight}</span>
                   </span>
                 </div>
 
-                <div className="relative">
-                  <Quote
-                    className="absolute -top-2 -left-1 text-amber-500/20"
-                    size={28}
-                    strokeWidth={1.5}
-                  />
-                  <p className="text-slate-300 leading-relaxed text-sm pl-6 italic">“{s.quote}”</p>
+                <div style={{ position: 'relative' }}>
+                  <Quote size={24} color="var(--blue-100)" style={{ position: 'absolute', top: -4, left: -4 }} strokeWidth={1.5} />
+                  <p style={{ margin: 0, paddingLeft: 24, fontSize: 14, lineHeight: 1.6, color: 'var(--text-body)', fontStyle: 'italic' }}>
+                    &ldquo;{s.quote}&rdquo;
+                  </p>
                 </div>
-              </article>
+              </Card>
             );
           })}
         </div>
 
-        <p className="text-center text-slate-600 text-xs mt-8">
+        <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-subtle)', marginTop: 32 }}>
           Stories shared with permission. Individual results vary and depend on consistency of logging.
         </p>
       </div>

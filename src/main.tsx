@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/paddle-design-system.css';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './LandingPage';

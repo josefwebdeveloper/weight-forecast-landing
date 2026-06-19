@@ -4,7 +4,6 @@ import {
   Smartphone,
   Shield,
   CheckCircle2,
-
   Zap,
   Target,
   Calendar,
@@ -19,7 +18,7 @@ import {
   BookOpen,
   Mic,
   MessageCircle,
-  Video
+  Video,
 } from 'lucide-react';
 import InteractiveDemo from './InteractiveDemo';
 import CaseStudies from './CaseStudies';
@@ -27,9 +26,12 @@ import TelegramCoach from './TelegramCoach';
 import FunFactsShow from './FunFactsShow';
 import ClientOnly from './ClientOnly';
 import IntegrationBadges from './IntegrationBadges';
+import HeroCardStack from './components/HeroCardStack';
+import ScrollStackShowcase from './components/ScrollStackShowcase';
+import VoiceLoggingMock from './components/VoiceLoggingMock';
 import { Link } from 'react-router-dom';
+import { Button, Card, Badge } from './components/paddle';
 
-// TypeScript declaration for gtag
 declare global {
   interface Window {
     gtag?: (command: string, ...args: any[]) => void;
@@ -39,23 +41,21 @@ declare global {
 
 const APP_URL = 'https://weight-forecast.com';
 
-// Google Analytics helper
 const trackEvent = (eventName: string, params?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', eventName, params);
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', eventName, params);
   }
 };
 
-// Removed useCounter as we're not using fake metrics anymore
+const ACCENTS = ['var(--blue-500)', 'var(--green-500)', 'var(--coral-500)', 'var(--lilac-500)', 'var(--gold-500)'];
+const ACCENT_SOFT = ['var(--blue-100)', 'var(--green-100)', 'var(--coral-100)', 'var(--lilac-100)', 'var(--gold-100)'];
 
 const LandingPage: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Track scroll depth
   useEffect(() => {
     const trackScroll = () => {
       const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-
       if (scrollPercent > 25 && !sessionStorage.getItem('scroll_25')) {
         trackEvent('scroll_depth', { depth: 25 });
         sessionStorage.setItem('scroll_25', 'true');
@@ -73,119 +73,30 @@ const LandingPage: React.FC = () => {
         sessionStorage.setItem('scroll_100', 'true');
       }
     };
-
     window.addEventListener('scroll', trackScroll);
     return () => window.removeEventListener('scroll', trackScroll);
   }, []);
 
   const features = [
-    {
-      icon: Brain,
-      title: '🎯 We help you foresee the future',
-      description: 'Stop guessing "when?" — Our AI calculates the EXACT DATE you will hit your target weight. We do the math for you daily.',
-      color: 'text-amber-400',
-      bg: 'bg-amber-500/10',
-      border: 'border-amber-500/20'
-    },
-    {
-      icon: Mic,
-      title: '🎙️ We help you log meals instantly',
-      description: 'Just use your voice. We extract the food items, estimate calories, and log them—so you don\'t have to type a thing.',
-      color: 'text-red-400',
-      bg: 'bg-red-500/10',
-      border: 'border-red-500/20'
-    },
-    {
-      icon: Sparkles,
-      title: '📸 We help you scan your food',
-      description: 'Take a photo, and our AI does the heavy lifting. No more databases or manual entry. We calculate the calories for you.',
-      color: 'text-purple-400',
-      bg: 'bg-purple-500/10',
-      border: 'border-purple-500/20'
-    },
-    {
-      icon: MessageCircle,
-      title: '🤖 We help you stay on track',
-      description: 'Your Telegram AI Coach delivers daily actionable plans and a weekly 60s personalized podcast to keep you perfectly aligned.',
-      color: 'text-blue-400',
-      bg: 'bg-blue-500/10',
-      border: 'border-blue-500/20'
-    },
-    {
-      icon: Video,
-      title: '🎬 Time Travel Progress Videos',
-      description: 'Since you are taking progress photos, we auto-generate timelapse videos of your transformation to share.',
-      color: 'text-orange-400',
-      bg: 'bg-orange-500/10',
-      border: 'border-orange-500/20'
-    },
-    {
-      icon: Activity,
-      title: '📉 We help you break plateaus',
-      description: 'Our mathematical plateau detection triggers custom coaching interventions (e.g. re-feed days) so we can keep your progress moving.',
-      color: 'text-emerald-400',
-      bg: 'bg-emerald-500/10',
-      border: 'border-emerald-500/20'
-    },
-    {
-      icon: Award,
-      title: '🏆 We help you build habits',
-      description: 'We track your consistency and reward you for showing up. Building the habit is half the job, and we guide you there.',
-      color: 'text-yellow-400',
-      bg: 'bg-yellow-500/10',
-      border: 'border-yellow-500/20'
-    },
-    {
-      icon: Activity,
-      title: '⌚️ Garmin & Wearables Sync',
-      description: 'Connect your Garmin, Strava, or Apple Health. We automatically sync your activity, sleep, and recovery data to make our AI even smarter.',
-      color: 'text-orange-400',
-      bg: 'bg-orange-500/10',
-      border: 'border-orange-500/20'
-    },
-    {
-      icon: BookOpen,
-      title: '📔 Daily Diary & Day Rating',
-      description: 'Write daily entries and rate your day (1-5 stars) to visually map how your mood tracks with your progress.',
-      color: 'text-indigo-400',
-      bg: 'bg-indigo-500/10',
-      border: 'border-indigo-500/20'
-    },
-    {
-      icon: Globe,
-      title: '💪 Fully Operational Offline',
-      description: 'Log food and weight with zero internet. We sync everything perfectly when you are back online. Perfect for travel.',
-      color: 'text-pink-400',
-      bg: 'bg-pink-500/10',
-      border: 'border-pink-500/20'
-    }
+    { icon: Brain, title: 'We help you foresee the future', description: 'Stop guessing "when?" — Our AI calculates the EXACT DATE you will hit your target weight. We do the math for you daily.' },
+    { icon: Mic, title: 'We help you log meals instantly', description: "Just use your voice. We extract the food items, estimate calories, and log them—so you don't have to type a thing." },
+    { icon: Sparkles, title: 'We help you scan your food', description: 'Take a photo, and our AI does the heavy lifting. No more databases or manual entry. We calculate the calories for you.' },
+    { icon: MessageCircle, title: 'We help you stay on track', description: 'Your Telegram AI Coach delivers daily actionable plans and a weekly 60s personalized podcast to keep you perfectly aligned.' },
+    { icon: Video, title: 'Time Travel Progress Videos', description: 'Since you are taking progress photos, we auto-generate timelapse videos of your transformation to share.' },
+    { icon: Activity, title: 'We help you break plateaus', description: 'Our mathematical plateau detection triggers custom coaching interventions so we can keep your progress moving.' },
+    { icon: Award, title: 'We help you build habits', description: 'We track your consistency and reward you for showing up. Building the habit is half the job, and we guide you there.' },
+    { icon: Activity, title: 'Garmin & Wearables Sync', description: 'Connect your Garmin, Strava, or Apple Health. We automatically sync your activity, sleep, and recovery data.' },
+    { icon: BookOpen, title: 'Daily Diary & Day Rating', description: 'Write daily entries and rate your day (1-5 stars) to visually map how your mood tracks with your progress.' },
+    { icon: Globe, title: 'Fully Operational Offline', description: 'Log food and weight with zero internet. We sync everything perfectly when you are back online.' },
   ];
 
   const faqs = [
-    {
-      q: 'How accurate is the AI weight prediction?',
-      a: 'Our AI uses linear regression on your weight history. After 2 weeks of daily logging, predictions are typically within 0.5kg accuracy. The more data you provide, the smarter it gets.'
-    },
-    {
-      q: 'Is Weight Forecast really 100% free?',
-      a: 'Yes! All features are completely free — AI predictions, unlimited tracking, food scanning, and cloud sync. No trials, no paywalls, no hidden fees. Ever.'
-    },
-    {
-      q: 'Why track weight 3 times per day?',
-      a: 'Your weight naturally fluctuates 1-3kg daily due to food, water, and activity. 3x tracking helps you see the real trend (not random spikes) and gives AI better data for predictions.'
-    },
-    {
-      q: 'Does it work offline?',
-      a: 'Yes! Weight Forecast is a Progressive Web App. Your data saves locally and syncs when online. Install it like a native app on any device.'
-    },
-    {
-      q: 'Does it work with Garmin or Apple Health?',
-      a: 'Yes! You can connect Garmin, Strava, and Apple Health. We use your activity and sleep data to refine our weight predictions and help you understand how exercise impacts your progress.'
-    },
-    {
-      q: 'Is my data private?',
-      a: 'Absolutely. Your data is encrypted and never sold. We use Firebase with strict security rules. You can export or delete your data anytime.'
-    }
+    { q: 'How accurate is the AI weight prediction?', a: 'Our AI uses linear regression on your weight history. After 2 weeks of daily logging, predictions are typically within 0.5kg accuracy. The more data you provide, the smarter it gets.' },
+    { q: 'Is Weight Forecast really 100% free?', a: 'Yes! All features are completely free — AI predictions, unlimited tracking, food scanning, and cloud sync. No trials, no paywalls, no hidden fees. Ever.' },
+    { q: 'Why track weight 3 times per day?', a: 'Your weight naturally fluctuates 1-3kg daily due to food, water, and activity. 3x tracking helps you see the real trend and gives AI better data for predictions.' },
+    { q: 'Does it work offline?', a: 'Yes! Weight Forecast is a Progressive Web App. Your data saves locally and syncs when online. Install it like a native app on any device.' },
+    { q: 'Does it work with Garmin or Apple Health?', a: 'Yes! You can connect Garmin, Strava, and Apple Health. We use your activity and sleep data to refine our weight predictions.' },
+    { q: 'Is my data private?', a: 'Absolutely. Your data is encrypted and never sold. We use Firebase with strict security rules. You can export or delete your data anytime.' },
   ];
 
   const comparisonData = [
@@ -200,313 +111,366 @@ const LandingPage: React.FC = () => {
     { feature: 'Completely Free Forever', us: true, others: false },
   ];
 
+  const navLinkStyle: React.CSSProperties = {
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    fontFamily: 'var(--font-sans)',
+    fontSize: 15,
+    fontWeight: 500,
+    color: 'var(--text-body)',
+    padding: '8px 12px',
+    borderRadius: 'var(--radius-sm)',
+    textDecoration: 'none',
+    transition: 'background 0.15s ease',
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white overflow-x-hidden font-sans">
-      {/* Hero Section */}
-      <header className="relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-slate-950 to-orange-900/20" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[800px] bg-amber-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[100px]" />
-
-        {/* Floating particles */}
-        <div className="absolute top-20 left-20 w-2 h-2 bg-amber-400 rounded-full animate-float opacity-60" />
-        <div className="absolute top-40 right-40 w-3 h-3 bg-orange-400 rounded-full animate-float opacity-40" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-40 left-1/3 w-2 h-2 bg-yellow-400 rounded-full animate-float opacity-50" style={{ animationDelay: '2s' }} />
-
-        {/* Navigation */}
-        <nav className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 animate-pulse-glow">
-              <Banana className="text-slate-950" size={24} />
+    <div style={{ minHeight: '100vh', overflowX: 'hidden', fontFamily: 'var(--font-sans)' }}>
+      {/* Sticky header — Paddle chrome */}
+      <header className="pdl-chrome" style={{ position: 'sticky', top: 0, zIndex: 40 }}>
+        <div className="pdl-container" style={{ height: 68, display: 'flex', alignItems: 'center', gap: 28 }}>
+          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                background: 'var(--ink-900)',
+                borderRadius: 'var(--radius-sm)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Banana size={20} color="#fff" />
             </div>
-            <span className="text-xl font-bold tracking-tight">Weight Forecast</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="#stories" className="hidden md:block text-slate-400 hover:text-white transition-colors text-sm">
-              Stories
-            </a>
-            <Link to="/vs/macrofactor" className="hidden md:block text-slate-400 hover:text-white transition-colors text-sm">
+            <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text-strong)' }}>
+              Weight Forecast
+            </span>
+          </Link>
+
+          <nav style={{ display: 'flex', gap: 4, flex: 1 }} className="hidden md:flex">
+            {[
+              { href: '#stories', label: 'Stories' },
+              { href: '#features', label: 'Features' },
+              { href: '#faq', label: 'FAQ' },
+            ].map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                style={navLinkStyle}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--ink-50)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                {n.label}
+              </a>
+            ))}
+            <Link
+              to="/vs/macrofactor"
+              style={navLinkStyle}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--ink-50)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+            >
               vs MacroFactor
             </Link>
-            <a href="#faq" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
-              FAQ
-            </a>
-            <Link to="/blog" className="hidden sm:block text-slate-400 hover:text-white transition-colors text-sm">
+            <Link
+              to="/blog"
+              style={navLinkStyle}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--ink-50)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+            >
               Blog
             </Link>
-            <a
+          </nav>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Button
+              variant="accent"
+              size="sm"
               href={APP_URL}
               onClick={() => trackEvent('cta_click', { location: 'hero_nav', cta_text: 'Start free' })}
-              className="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/25 text-slate-950 text-sm"
             >
               Start free
-            </a>
-          </div>
-        </nav>
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-20 sm:pt-20 sm:pb-32">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
-              <Target size={16} />
-              For athletes &amp; data geeks
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.08] mb-5 tracking-tight text-balance">
-              Smart predictive weight analyzer
-            </h1>
-
-            <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed">
-              Know the <span className="text-white font-semibold">exact date</span> you&apos;ll hit your target weight —
-              powered by your <span className="text-white font-semibold">Garmin</span>,{' '}
-              <span className="text-white font-semibold">Strava</span> &amp;{' '}
-              <span className="text-white font-semibold">Telegram</span> data.
-            </p>
-
-            <IntegrationBadges />
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6">
-              <a
-                href={APP_URL}
-                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Start free with Google' })}
-                className="group px-10 py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-lg text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/40 hover:scale-[1.03] flex items-center justify-center gap-2 min-w-[260px]"
-              >
-                Start free with Google
-              </a>
-              <a
-                href={`${APP_URL}?demo=1`}
-                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Try Demo' })}
-                className="px-8 py-4 glass border border-slate-600 hover:border-amber-400/50 rounded-xl font-medium text-base transition-all flex items-center justify-center gap-2 hover:bg-white/5 text-slate-300"
-              >
-                Try live demo — no signup
-              </a>
-            </div>
-            <p className="text-sm text-slate-500 mb-8">Free forever · No credit card · 1-click Google sign-in</p>
-
-            {/* Trust Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-slate-500 text-sm">
-              <div className="flex items-center gap-2">
-                <Shield size={18} className="text-emerald-500" />
-                <span>Privacy-First</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Smartphone size={18} className="text-blue-500" />
-                <span>Works Offline</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap size={18} className="text-amber-500" />
-                <span>AI-Powered</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Heart size={18} className="text-pink-500" />
-                <span>Free Forever</span>
-              </div>
-            </div>
-
-            <ClientOnly
-              fallback={
-                <div
-                  aria-hidden="true"
-                  className="mt-8 sm:mt-12 h-[420px] sm:h-[520px] rounded-3xl border border-slate-800/60 bg-slate-900/40 animate-pulse"
-                />
-              }
-            >
-              <InteractiveDemo />
-            </ClientOnly>
+            </Button>
           </div>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
       </header>
 
-      {/* Video Demo Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="glass border border-amber-500/20 rounded-3xl p-6 sm:p-12 shadow-2xl overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Hero — dark inverse section like Paddle AnimatedHero */}
+      <section className="pdl-bg-inverse" style={{ overflow: 'hidden' }}>
+        <div
+          className="pdl-container"
+          style={{
+            paddingTop: 88,
+            paddingBottom: 96,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))',
+            gap: 56,
+            alignItems: 'center',
+          }}
+        >
+          <div>
+            <div className="pdl-overline pdl-overline-dark" style={{ marginBottom: 18 }}>
+              For athletes &amp; data geeks
+            </div>
+            <h1 className="pdl-display pdl-display-dark" style={{ margin: 0 }}>
+              Smart predictive
+              <br />
+              weight analyzer
+            </h1>
+            <p className="pdl-lead pdl-lead-dark" style={{ margin: '22px 0 0', maxWidth: 480 }}>
+              Know the <strong style={{ color: '#fff', fontWeight: 600 }}>exact date</strong> you&apos;ll hit your target weight —
+              powered by your Garmin, Strava &amp; Telegram data.
+            </p>
 
-            <div className="flex flex-col gap-12 items-center text-center">
-              <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
-                  <Sparkles size={16} />
-                  See It In Action
+            <IntegrationBadges dark />
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
+              <Button
+                variant="inverse"
+                size="lg"
+                href={APP_URL}
+                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Start free with Google' })}
+              >
+                Start free with Google
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                href={`${APP_URL}?demo=1`}
+                style={{ color: '#fff', border: '1px solid var(--border-inverse)' }}
+                onClick={() => trackEvent('cta_click', { location: 'hero_primary', cta_text: 'Try Demo' })}
+              >
+                Try live demo
+              </Button>
+            </div>
+            <p style={{ marginTop: 16, fontSize: 13, color: 'var(--text-on-dark-muted)' }}>
+              Free forever · No credit card · 1-click Google sign-in
+            </p>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 28px', marginTop: 28 }}>
+              {[
+                { icon: Shield, label: 'Privacy-First', color: 'var(--green-500)' },
+                { icon: Smartphone, label: 'Works Offline', color: 'var(--blue-400)' },
+                { icon: Zap, label: 'AI-Powered', color: 'var(--gold-500)' },
+                { icon: Heart, label: 'Free Forever', color: 'var(--coral-500)' },
+              ].map(({ icon: Icon, label, color }) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--text-on-dark-muted)' }}>
+                  <Icon size={16} color={color} />
+                  {label}
                 </div>
-                <h2 className="text-3xl sm:text-5xl font-bold mb-6 leading-tight">
-                  We log your meals for you from <span className="text-amber-400">just your voice.</span>
-                </h2>
-                <p className="text-slate-400 text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
-                  No more tedious manual tracking. Just tap the microphone and say what you ate. We do the work for you: extracting food items, estimating calories, and bringing you closer to your goals. Our AI is the assistant that gets the job done.
-                </p>
+              ))}
+            </div>
+          </div>
 
-                <div className="grid sm:grid-cols-2 gap-4 mb-8 text-left max-w-3xl mx-auto">
-                  {[
-                    "Say 'I had a bowl of oatmeal and a banana'",
-                    "AI instantly calculates calories and logs the meal",
-                    "Your goal date adjusts automatically based on your intake",
-                    "Supports multiple languages including Russian and English"
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-slate-800/30 p-3 rounded-lg border border-slate-700/50">
-                      <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle2 size={14} />
-                      </div>
-                      <span className="text-slate-300 text-sm leading-snug">{item}</span>
-                    </div>
-                  ))}
-                </div>
+          <ClientOnly
+            fallback={
+              <div
+                aria-hidden="true"
+                style={{
+                  height: 420,
+                  borderRadius: 'var(--radius-xl)',
+                  border: '1px solid var(--border-inverse)',
+                  background: 'rgba(255,255,255,0.04)',
+                }}
+              />
+            }
+          >
+            <HeroCardStack />
+          </ClientOnly>
+        </div>
+      </section>
 
-                <a
-                  href={APP_URL}
-                  onClick={() => trackEvent('cta_click', { location: 'video_demo', cta_text: 'Try Voice Logging' })}
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-900 border border-amber-400 rounded-xl font-bold text-lg shadow-lg shadow-amber-500/20 transition-all hover:-translate-y-1"
-                >
-                  <Brain size={20} />
-                  Try Voice Logging Free
-                </a>
+      {/* Product showcase — compact stacked cards */}
+      <ScrollStackShowcase />
+
+      {/* Interactive forecast demo */}
+      <section className="pdl-bg-base pdl-section-sm">
+        <div className="pdl-container" style={{ maxWidth: 960 }}>
+          <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <div className="pdl-overline" style={{ marginBottom: 16 }}>Live preview</div>
+            <h2 className="pdl-h2" style={{ margin: '0 0 12px' }}>Play with your weight prediction</h2>
+            <p className="pdl-lead" style={{ maxWidth: 480, margin: '0 auto' }}>
+              Drag the sliders — no signup required.
+            </p>
+          </div>
+          <ClientOnly
+            fallback={
+              <div
+                aria-hidden="true"
+                style={{ height: 420, borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-subtle)', background: 'var(--ink-50)' }}
+              />
+            }
+          >
+            <InteractiveDemo />
+          </ClientOnly>
+        </div>
+      </section>
+
+      {/* Video demo — light base */}
+      <section className="pdl-bg-base pdl-section">
+        <div className="pdl-container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: 56, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--accent)', marginBottom: 14 }}>Voice logging</div>
+              <h2 className="pdl-h2" style={{ margin: 0 }}>
+                We log your meals from just your voice
+              </h2>
+              <p className="pdl-lead" style={{ margin: '16px 0 24px', maxWidth: 440 }}>
+                No more tedious manual tracking. Just tap the microphone and say what you ate. We extract food items, estimate calories, and adjust your goal date automatically.
+              </p>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10, marginBottom: 28 }}>
+                {[
+                  "Say 'I had a bowl of oatmeal and a banana'",
+                  'AI instantly calculates calories and logs the meal',
+                  'Your goal date adjusts automatically based on intake',
+                  'Supports multiple languages including Russian and English',
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: 10,
+                      padding: '12px 14px',
+                      background: 'var(--ink-50)',
+                      borderRadius: 'var(--radius-sm)',
+                    }}
+                  >
+                    <span className="pdl-check-dot" style={{ width: 18, height: 18, marginTop: 1 }}>
+                      <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
+                        <path d="M3.5 8.5l3 3 6-7" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    <span style={{ fontSize: 14, lineHeight: 1.45, color: 'var(--text-body)' }}>{item}</span>
+                  </div>
+                ))}
               </div>
 
-              <div className="relative w-full z-10">
-                <div className="absolute -inset-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl blur opacity-30 animate-pulse-glow" />
-                <div className="relative bg-slate-950 rounded-xl border border-slate-800 shadow-2xl overflow-hidden flex justify-center w-full">
-                  <video
-                    src="/demo-video.mov"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full max-h-[85vh] object-contain rounded-xl bg-black"
-                  />
-                </div>
-              </div>
+              <Button
+                variant="accent"
+                size="lg"
+                href={APP_URL}
+                iconLeft={<Mic size={18} />}
+                onClick={() => trackEvent('cta_click', { location: 'video_demo', cta_text: 'Try Voice Logging' })}
+              >
+                Try Voice Logging Free
+              </Button>
+            </div>
+
+            <div style={{ position: 'relative' }}>
+              <VoiceLoggingMock />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Fun Facts animated showcase — 50s cinematic loop of insights the app surfaces */}
-      <section className="py-20 sm:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/40 to-transparent" />
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10 sm:mb-14">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
-              <Sparkles size={16} />
-              Hidden In Your Data
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4 leading-tight">
-              The <span className="text-amber-400">fun facts</span> hiding
-              <br className="hidden sm:block" />
-              in a weight tracker
+      {/* Fun facts — warm bone section */}
+      <section className="pdl-bg-warm pdl-section">
+        <div className="pdl-container" style={{ maxWidth: 960 }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div className="pdl-overline" style={{ marginBottom: 16 }}>Hidden in your data</div>
+            <h2 className="pdl-h2" style={{ margin: '0 0 16px' }}>
+              The fun facts hiding in a weight tracker
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            <p className="pdl-lead" style={{ maxWidth: 520, margin: '0 auto' }}>
               Four screens. Thirteen insights. One very tired spreadsheet. Every number tells a story — we just highlight them.
             </p>
           </div>
-
-          <div className="relative">
-            <div className="absolute -inset-2 bg-gradient-to-r from-amber-500/40 via-emerald-500/30 to-rose-500/40 rounded-3xl blur-2xl opacity-30 pointer-events-none" />
-            <div className="relative">
-              <ClientOnly
-                fallback={
-                  <div
-                    aria-hidden="true"
-                    className="h-[520px] rounded-3xl border border-slate-800/60 bg-slate-900/40 animate-pulse"
-                  />
-                }
-              >
-                <FunFactsShow />
-              </ClientOnly>
-            </div>
-          </div>
+          <ClientOnly
+            fallback={
+              <div
+                aria-hidden="true"
+                style={{ height: 520, borderRadius: 'var(--radius-xl)', border: '1px solid var(--bone-deep)', background: 'var(--paper)' }}
+              />
+            }
+          >
+            <FunFactsShow />
+          </ClientOnly>
         </div>
       </section>
 
       <TelegramCoach />
 
-      {/* Features Section */}
-      <section id="features" className="py-20 sm:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-300 text-sm font-medium mb-6">
-              <Sparkles size={16} />
-              Advanced Job Done
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              How We Get The
-              <span className="text-amber-400"> Job Done For You</span>
+      {/* Features — base */}
+      <section id="features" className="pdl-bg-base pdl-section">
+        <div className="pdl-container">
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <div className="pdl-overline" style={{ marginBottom: 16 }}>Advanced job done</div>
+            <h2 className="pdl-h2" style={{ margin: '0 0 16px' }}>
+              How we get the job done for you
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Not just another weight tracker — an <span className="text-white font-semibold">advanced assistant</span> that does the heavy lifting to keep you motivated.
+            <p className="pdl-lead" style={{ maxWidth: 520, margin: '0 auto' }}>
+              Not just another weight tracker — an advanced assistant that does the heavy lifting to keep you motivated.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <article
-                key={index}
-                className={`group p-6 md:p-8 glass border ${feature.border} rounded-2xl hover:border-slate-500 transition-all hover:shadow-2xl hover:shadow-black/20 hover:-translate-y-1`}
-              >
-                <div className={`w-14 h-14 ${feature.bg} rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform`}>
-                  <feature.icon className={feature.color} size={28} />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{feature.description}</p>
-              </article>
-            ))}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
+            {features.map((feature, index) => {
+              const accent = ACCENTS[index % ACCENTS.length];
+              const soft = ACCENT_SOFT[index % ACCENT_SOFT.length];
+              return (
+                <Card key={index} interactive padding={28}>
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      background: soft,
+                      borderRadius: 'var(--radius-md)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: 20,
+                    }}
+                  >
+                    <feature.icon size={24} color={accent} />
+                  </div>
+                  <h3 style={{ margin: '0 0 10px', fontSize: 18, fontWeight: 600, letterSpacing: 'var(--tracking-snug)', color: 'var(--text-strong)' }}>
+                    {feature.title}
+                  </h3>
+                  <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: 'var(--text-muted)' }}>{feature.description}</p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* How It Works */}
-      <section id="how-it-works" className="py-20 sm:py-28 bg-slate-900/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              Three Steps to
-              <span className="text-amber-400"> Your Goal</span>
-            </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Get your prediction in under 60 seconds.
-            </p>
+      {/* How it works — warm */}
+      <section id="how-it-works" className="pdl-bg-warm pdl-section">
+        <div className="pdl-container">
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <h2 className="pdl-h2" style={{ margin: '0 0 16px' }}>Three steps to your goal</h2>
+            <p className="pdl-lead">Get your prediction in under 60 seconds.</p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8 md:gap-12">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 40 }}>
             {[
-              {
-                step: '01',
-                title: 'Sign Up Free',
-                description: 'One click with Google. No forms, no credit card, no friction.',
-                icon: Activity,
-                color: 'from-emerald-400 to-teal-500'
-              },
-              {
-                step: '02',
-                title: 'Set Your Goal',
-                description: 'Enter your target weight. AI calculates ideal BMI and timeline.',
-                icon: Target,
-                color: 'from-amber-400 to-orange-500'
-              },
-              {
-                step: '03',
-                title: 'Get Your Date',
-                description: 'Log daily weights. Watch AI predict when you\'ll arrive.',
-                icon: Calendar,
-                color: 'from-purple-400 to-pink-500'
-              }
-            ].map((item, index) => (
-              <div key={index} className="relative">
-                {index < 2 && (
-                  <div className="hidden sm:block absolute top-8 left-[60%] w-[80%] h-px bg-gradient-to-r from-slate-700 to-transparent" />
-                )}
-                <div className="text-center">
-                  <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${item.color} rounded-2xl mb-6 shadow-lg`}>
-                    <item.icon className="text-white" size={28} />
-                  </div>
-                  <div className="text-amber-400/50 text-sm font-bold mb-2">STEP {item.step}</div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{item.description}</p>
+              { step: '01', title: 'Sign Up Free', description: 'One click with Google. No forms, no credit card, no friction.', icon: Activity, accent: 'var(--green-500)' },
+              { step: '02', title: 'Set Your Goal', description: 'Enter your target weight. AI calculates ideal BMI and timeline.', icon: Target, accent: 'var(--blue-500)' },
+              { step: '03', title: 'Get Your Date', description: "Log daily weights. Watch AI predict when you'll arrive.", icon: Calendar, accent: 'var(--coral-500)' },
+            ].map((item) => (
+              <div key={item.step} style={{ textAlign: 'center' }}>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 56,
+                    height: 56,
+                    background: item.accent,
+                    borderRadius: 'var(--radius-md)',
+                    marginBottom: 20,
+                  }}
+                >
+                  <item.icon size={26} color="#fff" />
                 </div>
+                <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: 'var(--tracking-overline)', textTransform: 'uppercase', color: 'var(--text-subtle)', marginBottom: 8 }}>
+                  Step {item.step}
+                </div>
+                <h3 style={{ margin: '0 0 10px', fontSize: 20, fontWeight: 600, color: 'var(--text-strong)' }}>{item.title}</h3>
+                <p style={{ margin: 0, fontSize: 15, lineHeight: 1.55, color: 'var(--text-muted)' }}>{item.description}</p>
               </div>
             ))}
           </div>
@@ -515,155 +479,239 @@ const LandingPage: React.FC = () => {
 
       <CaseStudies />
 
-      {/* Comparison Table */}
-      <section className="py-20 sm:py-28 bg-slate-900/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              Why We're
-              <span className="text-amber-400"> Different</span>
-            </h2>
-            <p className="text-slate-400 text-lg mb-4">
-              See what other apps are missing.
-            </p>
+      {/* Comparison — base */}
+      <section className="pdl-bg-base pdl-section-sm">
+        <div className="pdl-container-narrow">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <h2 className="pdl-h2" style={{ margin: '0 0 16px' }}>Why we&apos;re different</h2>
+            <p className="pdl-lead" style={{ marginBottom: 16 }}>See what other apps are missing.</p>
             <Link
               to="/vs/macrofactor"
               onClick={() => trackEvent('navigation_click', { destination: 'vs_macrofactor' })}
-              className="inline-flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+              style={{ fontSize: 14, fontWeight: 600, color: 'var(--accent)', textDecoration: 'none' }}
             >
               Full comparison vs MacroFactor →
             </Link>
           </div>
 
-          <div className="glass border border-slate-700/50 rounded-2xl overflow-hidden">
-            <div className="grid grid-cols-3 bg-slate-800/50 p-4 border-b border-slate-700/50">
-              <div className="font-semibold">Feature</div>
-              <div className="text-center font-semibold text-amber-400">Weight Forecast</div>
-              <div className="text-center font-semibold text-slate-500">Other Apps</div>
+          <Card padding={0} style={{ overflow: 'hidden' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                padding: '14px 20px',
+                background: 'var(--ink-50)',
+                borderBottom: '1px solid var(--border-subtle)',
+                fontWeight: 600,
+                fontSize: 14,
+              }}
+            >
+              <div>Feature</div>
+              <div style={{ textAlign: 'center', color: 'var(--accent)' }}>Weight Forecast</div>
+              <div style={{ textAlign: 'center', color: 'var(--text-muted)' }}>Other Apps</div>
             </div>
             {comparisonData.map((row, i) => (
-              <div key={i} className={`grid grid-cols-3 p-4 ${i !== comparisonData.length - 1 ? 'border-b border-slate-700/30' : ''}`}>
-                <div className="text-slate-300">{row.feature}</div>
-                <div className="text-center">
-                  {row.us ? <CheckCircle2 className="text-emerald-400 mx-auto" size={20} /> : '—'}
+              <div
+                key={i}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  padding: '14px 20px',
+                  borderBottom: i !== comparisonData.length - 1 ? '1px solid var(--border-subtle)' : undefined,
+                  fontSize: 14,
+                }}
+              >
+                <div style={{ color: 'var(--text-body)' }}>{row.feature}</div>
+                <div style={{ textAlign: 'center' }}>
+                  {row.us ? <CheckCircle2 size={20} color="var(--success-solid)" style={{ margin: '0 auto' }} /> : '—'}
                 </div>
-                <div className="text-center">
-                  {row.others === true ? <CheckCircle2 className="text-slate-500 mx-auto" size={20} /> :
+                <div style={{ textAlign: 'center' }}>
+                  {row.others === true ? <CheckCircle2 size={20} color="var(--text-subtle)" style={{ margin: '0 auto' }} /> :
                     row.others === '💰' ? <span title="Paid feature">💰</span> :
-                      <span className="text-slate-600">—</span>}
+                      <span style={{ color: 'var(--text-subtle)' }}>—</span>}
                 </div>
               </div>
             ))}
-          </div>
+          </Card>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section id="faq" className="py-20 sm:py-28">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-              Questions?
-              <span className="text-amber-400"> Answers.</span>
-            </h2>
+      {/* FAQ — warm */}
+      <section id="faq" className="pdl-bg-warm pdl-section">
+        <div className="pdl-container-narrow">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <h2 className="pdl-h2" style={{ margin: 0 }}>Questions? Answers.</h2>
           </div>
 
-          <div className="space-y-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {faqs.map((faq, i) => (
-              <div
-                key={i}
-                className="glass border border-slate-700/50 rounded-xl overflow-hidden hover:border-slate-600 transition-colors"
-              >
+              <Card key={i} padding={0} style={{ overflow: 'hidden' }}>
                 <button
                   onClick={() => {
                     setOpenFaq(openFaq === i ? null : i);
                     trackEvent('faq_interaction', { question: faq.q, action: openFaq === i ? 'close' : 'open' });
                   }}
-                  className="w-full flex items-center justify-between p-5 text-left"
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '18px 22px',
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: 16,
+                    fontWeight: 600,
+                    color: 'var(--text-strong)',
+                    textAlign: 'left',
+                  }}
                 >
-                  <span className="font-semibold pr-4">{faq.q}</span>
+                  <span style={{ paddingRight: 16 }}>{faq.q}</span>
                   <ChevronDown
                     size={20}
-                    className={`text-amber-400 flex-shrink-0 transition-transform ${openFaq === i ? 'rotate-180' : ''}`}
+                    color="var(--accent)"
+                    style={{ flexShrink: 0, transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s ease' }}
                   />
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-5 text-slate-400 leading-relaxed border-t border-slate-700/30 pt-4">
+                  <div
+                    style={{
+                      padding: '0 22px 18px',
+                      fontSize: 15,
+                      lineHeight: 1.6,
+                      color: 'var(--text-muted)',
+                      borderTop: '1px solid var(--border-subtle)',
+                      paddingTop: 16,
+                    }}
+                  >
                     {faq.a}
                   </div>
                 )}
-              </div>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-20 sm:py-28">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-red-500/30 rounded-3xl blur-3xl" />
-            <div className="relative glass border border-amber-500/20 rounded-3xl p-10 sm:p-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-300 text-sm font-medium mb-6">
-                <Clock size={16} />
-                Get your goal date in 60 seconds
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-bold mb-4">
-                Let Us Help You Hit Your Goal.
-                <span className="block text-amber-400">Start Now.</span>
-              </h2>
-              <p className="text-slate-400 text-lg mb-4 max-w-xl mx-auto">
-                Your personal assistant is <span className="text-white font-semibold">ready to work for you</span>.
-                Join 10,847+ people who are getting the job done.
-              </p>
-              <p className="text-amber-300 text-base mb-8 max-w-xl mx-auto font-medium">
-                ⚡ We take care of the details. You get the results.
-              </p>
-              <a
-                href={APP_URL}
-                onClick={() => trackEvent('cta_click', { location: 'final_cta', cta_text: 'Let Us Help You' })}
-                className="group px-10 py-5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 rounded-xl font-bold text-xl text-slate-950 transition-all hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105 inline-flex items-center justify-center gap-2"
-              >
-                Let Us Help You (FREE)
-              </a>
-              <p className="text-slate-500 text-sm mt-4">
-                ✓ Free forever • ✓ No credit card • ✓ Start in 60 seconds
-              </p>
-            </div>
+      {/* Final CTA — warm band like Paddle CTABand */}
+      <section className="pdl-bg-warm" style={{ padding: '88px 0' }}>
+        <div className="pdl-container" style={{ textAlign: 'center' }}>
+          <Badge status="success" style={{ marginBottom: 20 }}>Get your goal date in 60 seconds</Badge>
+          <h2 className="pdl-h2" style={{ margin: '0 auto', maxWidth: 640 }}>
+            Let us help you hit your goal. Start now.
+          </h2>
+          <p className="pdl-lead" style={{ margin: '18px auto 0', maxWidth: 480 }}>
+            Your personal assistant is ready to work for you. Join 10,847+ people who are getting the job done.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 30 }}>
+            <Button
+              variant="accent"
+              size="lg"
+              href={APP_URL}
+              onClick={() => trackEvent('cta_click', { location: 'final_cta', cta_text: 'Let Us Help You' })}
+            >
+              Let Us Help You (FREE)
+            </Button>
           </div>
+          <p style={{ marginTop: 16, fontSize: 13, color: 'var(--text-subtle)' }}>
+            Free forever · No credit card · Start in 60 seconds
+          </p>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center">
-                <Banana className="text-slate-950" size={18} />
+      {/* Footer — ink-950 like Paddle SiteFooter */}
+      <footer className="pdl-bg-ink-950" style={{ padding: '72px 0 40px' }}>
+        <div className="pdl-container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 32 }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    background: '#fff',
+                    borderRadius: 'var(--radius-sm)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Banana size={18} color="var(--ink-900)" />
+                </div>
+                <span style={{ fontWeight: 700, fontSize: 16 }}>Weight Forecast</span>
               </div>
-              <span className="font-bold">Weight Forecast</span>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--text-on-dark-muted)', maxWidth: 240, margin: 0 }}>
+                AI-powered weight prediction tells you the exact date you&apos;ll hit your goal weight.
+              </p>
             </div>
 
-            <div className="flex items-center gap-2 text-slate-500 text-sm">
-              <Globe size={14} />
-              <span>Made with ❤️ for a healthier world</span>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-400">
-              <a href="#features" className="hover:text-white transition-colors">Features</a>
-              <a href="#stories" className="hover:text-white transition-colors">Stories</a>
-              <Link to="/vs/macrofactor" className="hover:text-white transition-colors">vs MacroFactor</Link>
-              <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
-              <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
-              <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
-              <a href="mailto:working.projects.info@gmail.com" className="hover:text-white transition-colors">Contact</a>
-            </div>
+            {[
+              { h: 'Product', items: [{ label: 'Features', href: '#features' }, { label: 'Stories', href: '#stories' }, { label: 'FAQ', href: '#faq' }] },
+              { h: 'Compare', items: [{ label: 'vs MacroFactor', to: '/vs/macrofactor' }] },
+              { h: 'Resources', items: [{ label: 'Blog', to: '/blog' }] },
+              { h: 'Legal', items: [{ label: 'Privacy', to: '/privacy' }, { label: 'Terms', to: '/terms' }, { label: 'Contact', href: 'mailto:working.projects.info@gmail.com' }] },
+            ].map((col) => (
+              <div key={col.h}>
+                <div
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 600,
+                    letterSpacing: '0.04em',
+                    textTransform: 'uppercase',
+                    color: 'var(--text-on-dark-muted)',
+                    marginBottom: 16,
+                  }}
+                >
+                  {col.h}
+                </div>
+                <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
+                  {col.items.map((it) => (
+                    <li key={it.label}>
+                      {'to' in it && it.to ? (
+                        <Link
+                          to={it.to}
+                          style={{ color: 'rgba(255,255,255,0.78)', textDecoration: 'none', fontSize: 14.5 }}
+                          onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.78)'; }}
+                        >
+                          {it.label}
+                        </Link>
+                      ) : (
+                        <a
+                          href={'href' in it ? it.href : '#'}
+                          style={{ color: 'rgba(255,255,255,0.78)', textDecoration: 'none', fontSize: 14.5 }}
+                          onMouseEnter={(e) => { e.currentTarget.style.color = '#fff'; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.78)'; }}
+                        >
+                          {it.label}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-8 pt-8 border-t border-slate-800/50 text-center text-slate-600 text-sm">
-            © {new Date().getFullYear()} Weight Forecast. All rights reserved.
+          <div
+            style={{
+              marginTop: 48,
+              paddingTop: 24,
+              borderTop: '1px solid var(--border-inverse)',
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 12,
+              fontSize: 13.5,
+              color: 'var(--text-on-dark-muted)',
+            }}
+          >
+            <span>© {new Date().getFullYear()} Weight Forecast. All rights reserved.</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Globe size={14} />
+              Made with care for a healthier world
+            </span>
           </div>
         </div>
       </footer>
